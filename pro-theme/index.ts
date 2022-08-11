@@ -1,5 +1,4 @@
 import { extendTheme, theme as baseTheme } from '@chakra-ui/react';
-import 'focus-visible/dist/focus-visible';
 import * as components from './components';
 import * as foundations from './foundations';
 

@@ -1,3 +1,5 @@
 import User from "../../components/Admin";
 
-export default () => <User />;
+export default function Admin() {
+  return <User />;
+}

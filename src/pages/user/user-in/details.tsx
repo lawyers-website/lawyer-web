@@ -1,3 +1,5 @@
 import Details from "../../../components/User/details";
 
-export default () => <Details />;
+export default function lawyerDetails() {
+  return <Details />;
+}

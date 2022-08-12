@@ -10,15 +10,15 @@ import {
   Text,
   useBreakpointValue,
   useColorModeValue,
-} from '@chakra-ui/react';
-import { useRouter } from 'next/router';
-import { Formik, Form, FormikErrors } from 'formik';
-import { z } from 'zod';
-import { toFormikValidationSchema } from 'zod-formik-adapter';
-import FormInput from 'src/components/FormikCompo/FormInput';
-import OAuthButtonGroup from 'src/components/Oauth';
-import PasswordField from 'src/components/FormikCompo/PasswordField';
-import { signIn } from 'next-auth/react';
+} from "@chakra-ui/react";
+import { useRouter } from "next/router";
+import { Formik, Form, FormikErrors } from "formik";
+import { z } from "zod";
+import { toFormikValidationSchema } from "zod-formik-adapter";
+import FormInput from "src/components/FormikCompo/FormInput";
+import OAuthButtonGroup from "src/components/Oauth";
+import PasswordField from "src/components/FormikCompo/PasswordField";
+import { signIn } from "next-auth/react";
 
 export const AuthError = {
   WRONG_PASSWORD: 1,
@@ -43,13 +43,13 @@ const setFormikErrors = (
       break;
     case AuthError.NO_PASSWORD:
       setErrors({
-        password: 'Please Enter the passwor',
+        password: "Please Enter the password",
       });
       break;
     case AuthError.WRONG_PASSWORD:
       setErrors({
-        password: 'Email or Password are incorrect',
-        email: 'Email or Password are incorrect',
+        password: "Email or Password are incorrect",
+        email: "Email or Password are incorrect",
       });
       break;
   }
@@ -59,22 +59,22 @@ export default function App() {
   const router = useRouter();
   return (
     <Container
-      maxW='lg'
-      py={{ base: '12', md: '24' }}
-      px={{ base: '0', sm: '8' }}
+      maxW="lg"
+      py={{ base: "12", md: "24" }}
+      px={{ base: "0", sm: "8" }}
     >
-      <Stack spacing='8'>
-        <Stack spacing='6'>
-          <Stack spacing={{ base: '2', md: '3' }} textAlign='center'>
-            <Heading size={useBreakpointValue({ base: 'xs', md: 'sm' })}>
+      <Stack spacing="8">
+        <Stack spacing="6">
+          <Stack spacing={{ base: "2", md: "3" }} textAlign="center">
+            <Heading size={useBreakpointValue({ base: "xs", md: "sm" })}>
               Log in to your account
             </Heading>
-            <HStack spacing='1' justify='center'>
-              <Text color='muted'>Don&apos;t have an account?</Text>
+            <HStack spacing="1" justify="center">
+              <Text color="muted">Don&apos;t have an account?</Text>
               <Button
-                onClick={() => router.push('/signup')}
-                variant='link'
-                colorScheme='blue'
+                onClick={() => router.push("/signup")}
+                variant="link"
+                colorScheme="blue"
               >
                 Sign up
               </Button>
@@ -82,57 +82,57 @@ export default function App() {
           </Stack>
         </Stack>
         <Box
-          py={{ base: '0', sm: '8' }}
-          px={{ base: '4', sm: '10' }}
-          bg={useBreakpointValue({ base: 'transparent', sm: 'bg-surface' })}
-          boxShadow={{ base: 'none', sm: useColorModeValue('md', 'md-dark') }}
-          borderRadius={{ base: 'none', sm: 'xl' }}
+          py={{ base: "0", sm: "8" }}
+          px={{ base: "4", sm: "10" }}
+          bg={useBreakpointValue({ base: "transparent", sm: "bg-surface" })}
+          boxShadow={{ base: "none", sm: useColorModeValue("md", "md-dark") }}
+          borderRadius={{ base: "none", sm: "xl" }}
         >
           <Formik
-            initialValues={{ email: '', password: '' }}
+            initialValues={{ email: "", password: "" }}
             onSubmit={(values, { setSubmitting, setErrors }) => {
-              signIn('credentials', {
+              signIn("credentials", {
                 ...values,
-                redirect: true,
-                callbackUrl: '/',
+                redirect: false,
               }).then((value) => {
                 if (value?.error) setFormikErrors(value?.error, setErrors);
+                if (value?.ok) router.push("/user/user-in");
                 setSubmitting(false);
               });
             }}
             validationSchema={toFormikValidationSchema(
               z.object({
-                email: z.string().email('Please enter valid email'),
+                email: z.string().email("Please enter valid email"),
                 password: z.string(),
               })
             )}
           >
-            {({ values, isSubmitting }) => (
-              <Form style={{ width: '100%' }}>
-                <Stack spacing='6'>
-                  <Stack spacing='5'>
+            {() => (
+              <Form style={{ width: "100%" }}>
+                <Stack spacing="6">
+                  <Stack spacing="5">
                     <FormInput
-                      name='email'
-                      id='email'
-                      type='email'
-                      label='Email'
-                      formLabelProps={{ htmlFor: 'email' }}
+                      name="email"
+                      id="email"
+                      type="email"
+                      label="Email"
+                      formLabelProps={{ htmlFor: "email" }}
                     />
-                    <PasswordField name='password' label='Password' />
+                    <PasswordField name="password" label="Password" />
                   </Stack>
-                  <HStack justify='space-between'>
+                  <HStack justify="space-between">
                     <Checkbox defaultChecked>Remember me</Checkbox>
-                    <Button variant='link' colorScheme='blue' size='sm'>
+                    <Button variant="link" colorScheme="blue" size="sm">
                       Forgot password?
                     </Button>
                   </HStack>
-                  <Stack spacing='6'>
-                    <Button variant='primary' type='submit'>
+                  <Stack spacing="6">
+                    <Button variant="primary" type="submit">
                       Sign in
                     </Button>
                     <HStack>
                       <Divider />
-                      <Text fontSize='sm' whiteSpace='nowrap' color='muted'>
+                      <Text fontSize="sm" whiteSpace="nowrap" color="muted">
                         or continue with
                       </Text>
                       <Divider />

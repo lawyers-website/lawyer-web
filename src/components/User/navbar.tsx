@@ -17,6 +17,7 @@ import {
   InputRightElement,
   InputGroup,
   Input,
+  InputLeftElement,
 } from "@chakra-ui/react";
 import * as React from "react";
 import { MdAccountCircle } from "react-icons/md";
@@ -24,6 +25,7 @@ import { IoSearch } from "react-icons/io5";
 import { FiSettings } from "react-icons/fi";
 import { RiQuestionLine } from "react-icons/ri";
 import { useRouter } from "next/router";
+import { HiOutlineMail } from "react-icons/hi";
 
 export default function Navbar() {
   const router = useRouter();
@@ -46,21 +48,14 @@ export default function Navbar() {
             </Heading>
             {isDesktop ? (
               <Flex justify="space-between" flex="1">
-                <ButtonGroup variant="link" spacing="8">
-                  {["Home", "Bookmarks", "Tasks"].map((item) => (
-                    <Button key={item}>{item}</Button>
-                  ))}
-                  <Button onClick={() => router.push("/user/user-in/details")}>
-                    Become a Lawyer
-                  </Button>
-                </ButtonGroup>
-                <HStack spacing="3">
-                  <InputGroup size="md">
-                    <Input placeholder="Search" />
-                    <InputRightElement width="3rem">
-                      <IoSearch size={22} />
-                    </InputRightElement>
-                  </InputGroup>
+                <InputGroup size={size}>
+                  <Input width="40rem" placeholder="Search your Lawyer" />
+                  <InputLeftElement width="3rem">
+                    <IoSearch size={22} />
+                  </InputLeftElement>
+                </InputGroup>
+                <HStack spacing="4">
+                  <HiOutlineMail size={25} />
                   <FiSettings size={22} />
                   <RiQuestionLine size={20} />
                   <Menu>
@@ -85,7 +80,7 @@ export default function Navbar() {
             ) : (
               <HStack spacing="3">
                 <InputGroup size={size}>
-                  <Input placeholder="Search" />
+                  <Input placeholder="search " />
                   <InputRightElement width="3rem">
                     <IoSearch size={22} />
                   </InputRightElement>

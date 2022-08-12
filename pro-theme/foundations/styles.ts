@@ -1,4 +1,5 @@
-import { mode, StyleFunctionProps } from '@chakra-ui/theme-tools'
+import { mode } from '@chakra-ui/theme-tools';
+import { StyleFunctionProps } from '@chakra-ui/react';
 
 export default {
   global: (props: StyleFunctionProps) => ({
@@ -14,4 +15,4 @@ export default {
       borderColor: mode('gray.200', 'gray.700')(props),
     },
   }),
-}
+};

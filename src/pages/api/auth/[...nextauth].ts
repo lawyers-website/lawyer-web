@@ -5,15 +5,22 @@ import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { prisma } from 'src/server/db/client';
 import { env } from '../../../env/server.mjs';
 import bcrypt from 'bcryptjs';
+import { AuthError } from 'src/pages/signin';
 
 export const authOptions: NextAuthOptions = {
   callbacks: {
-    session({ session, user }) {
-      if (session.user) {
-        session.user.id = user.id;
-      }
+    session({ session }) {
       return session;
     },
+    jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+      }
+      return token;
+    },
+  },
+  session: {
+    strategy: 'jwt',
   },
   adapter: PrismaAdapter(prisma),
   providers: [
@@ -31,9 +38,9 @@ export const authOptions: NextAuthOptions = {
         const email = credentials?.email;
         const password = credentials?.password;
         if (!password) {
-          return null;
+          throw new Error(`${AuthError.NO_PASSWORD}`);
         }
-        const user = await prisma.user.findFirst({ where: { email } });
+        const user = await prisma.user.findUnique({ where: { email } });
         if (user && user.password) {
           const isPasswordMatched = await bcrypt.compare(
             password,
@@ -43,16 +50,16 @@ export const authOptions: NextAuthOptions = {
           if (isPasswordMatched) {
             return { ...user, password: undefined };
           } else {
-            return null;
+            throw new Error(`${AuthError.WRONG_PASSWORD}`);
           }
         } else {
-          return null;
+          throw new Error(`${AuthError.EMAIL_DOESNT_EXIST}`);
         }
       },
     }),
   ],
   pages: {
-    signIn: 'auth/sigin',
+    signIn: '/signin',
   },
 };
 

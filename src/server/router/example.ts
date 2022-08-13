@@ -24,7 +24,7 @@ export const exampleRouter = createRouter()
   })
   .query('test', {
     async resolve({ ctx }) {
-      const token = ctx.token;
-      return token;
+      console.log(ctx.session?.user);
+      return 'testing...';
     },
   });

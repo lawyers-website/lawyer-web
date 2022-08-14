@@ -1,4 +1,5 @@
-import { mode, StyleFunctionProps, transparentize } from '@chakra-ui/theme-tools'
+import { mode, transparentize } from '@chakra-ui/theme-tools';
+import { StyleFunctionProps } from '@chakra-ui/react';
 
 const baseStyle = {
   table: {
@@ -12,7 +13,7 @@ const baseStyle = {
     borderTopWidth: '1px',
     whiteSpace: 'nowrap',
   },
-}
+};
 
 const variants = {
   simple: (props: StyleFunctionProps) => ({
@@ -46,13 +47,16 @@ const variants = {
             borderBottomWidth: '0px',
           },
           td: {
-            bg: mode('gray.50', transparentize('gray.700', 0.4)(props.theme))(props),
+            bg: mode(
+              'gray.50',
+              transparentize('gray.700', 0.4)(props.theme)
+            )(props),
           },
         },
       },
     },
   }),
-}
+};
 
 const sizes = {
   md: {
@@ -63,10 +67,10 @@ const sizes = {
       fontSize: 'sm',
     },
   },
-}
+};
 
 export default {
   sizes,
   baseStyle,
   variants,
-}
+};

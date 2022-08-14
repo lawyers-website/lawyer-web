@@ -1,4 +1,4 @@
-import { StyleFunctionProps } from '@chakra-ui/theme-tools'
+import { StyleFunctionProps } from '@chakra-ui/react';
 
 const baseStyle = {
   tab: {
@@ -11,13 +11,14 @@ const baseStyle = {
       boxShadow: 'base',
     },
   },
-}
+};
 
 const withLine = (props: StyleFunctionProps) => {
-  const { orientation, size } = props
-  const isVertical = orientation === 'vertical'
-  const borderProp = orientation === 'vertical' ? 'borderStart' : 'borderBottom'
-  const marginProp = isVertical ? 'marginStart' : 'marginBottom'
+  const { orientation, size } = props;
+  const isVertical = orientation === 'vertical';
+  const borderProp =
+    orientation === 'vertical' ? 'borderStart' : 'borderBottom';
+  const marginProp = isVertical ? 'marginStart' : 'marginBottom';
 
   const horizontalStyles = {
     pt: '0',
@@ -27,7 +28,7 @@ const withLine = (props: StyleFunctionProps) => {
     ':not(:last-child)': {
       me: '4',
     },
-  }
+  };
 
   const verticalStyles = {
     justifyContent: 'start',
@@ -35,7 +36,7 @@ const withLine = (props: StyleFunctionProps) => {
     ':not(:last-child)': {
       mb: '2',
     },
-  }
+  };
 
   return {
     tablist: {
@@ -55,8 +56,8 @@ const withLine = (props: StyleFunctionProps) => {
       },
       ...(isVertical ? verticalStyles : horizontalStyles),
     },
-  }
-}
+  };
+};
 
 const enclosed = {
   tab: {
@@ -64,12 +65,12 @@ const enclosed = {
       color: 'accent',
     },
   },
-}
+};
 
 const variants = {
   'with-line': withLine,
   enclosed,
-}
+};
 
 const sizes = {
   md: {
@@ -85,6 +86,6 @@ const sizes = {
       py: '2.5',
     },
   },
-}
+};
 
-export default { baseStyle, variants, sizes }
+export default { baseStyle, variants, sizes };

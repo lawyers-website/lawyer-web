@@ -16,14 +16,11 @@ export const createContext = async (
   const session =
     req && res && (await getServerSession(req, res, nextAuthOptions));
 
-  const token = req && (await getToken({ req }));
-
   return {
     req,
     res,
     session,
     prisma,
-    token,
   };
 };
 

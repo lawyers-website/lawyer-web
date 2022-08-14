@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import Boxes from "./box";
 // import MyChart from './myChart';
-// import MyChart1 from './myChart1';
+import MyChart1 from "./myChart1";
 
 export default function Dashboard() {
   const items = [
@@ -66,7 +66,7 @@ export default function Dashboard() {
           </ButtonGroup>
         </HStack>
         <Divider marginBottom="1.5rem" />
-        {/* <MyChart1 /> */}
+        <MyChart1 />
       </Box>
       <Divider my="1rem" />
     </>

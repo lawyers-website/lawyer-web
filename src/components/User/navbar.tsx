@@ -26,6 +26,7 @@ import { FiSettings } from "react-icons/fi";
 import { RiQuestionLine } from "react-icons/ri";
 import { useRouter } from "next/router";
 import { HiOutlineMail } from "react-icons/hi";
+import { signOut } from "next-auth/react";
 
 export default function Navbar() {
   const router = useRouter();
@@ -71,7 +72,16 @@ export default function Navbar() {
                       <MenuGroup title="Help">
                         <MenuItem>Docs</MenuItem>
                         <MenuItem>FAQ</MenuItem>
-                        <Button variant="ghost">Sign out</Button>
+                        <Button
+                          variant="ghost"
+                          onClick={() =>
+                            signOut({
+                              callbackUrl: "http://localhost:3000",
+                            })
+                          }
+                        >
+                          Sign out
+                        </Button>
                       </MenuGroup>
                     </MenuList>
                   </Menu>
@@ -98,7 +108,16 @@ export default function Navbar() {
                     <MenuGroup title="Help">
                       <MenuItem>Docs</MenuItem>
                       <MenuItem>FAQ</MenuItem>
-                      <Button variant="ghost">Sign out</Button>
+                      <Button
+                        variant="ghost"
+                        onClick={() =>
+                          signOut({
+                            callbackUrl: "http://localhost:3000",
+                          })
+                        }
+                      >
+                        Sign out
+                      </Button>
                     </MenuGroup>
                   </MenuList>
                 </Menu>

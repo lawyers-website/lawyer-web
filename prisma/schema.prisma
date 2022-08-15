@@ -33,15 +33,33 @@ model Session {
     user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+model LawyerDetails {
+    id          String @id @default(cuid())
+    lawyerId    String @unique
+    lawyer      User   @relation(fields: [lawyerId], references: [id], onDelete: Cascade)
+    institution String
+    course      String
+    experience  Int
+}
+
 model User {
-    id            String    @id @default(cuid())
+    id            String         @id @default(cuid())
     name          String?
-    email         String?   @unique
+    email         String?        @unique
     password      String?
     emailVerified DateTime?
     image         String?
+    role          Role           @default(USER)
+    createdAt     DateTime       @default(now())
     accounts      Account[]
     sessions      Session[]
+    lawyerDetails LawyerDetails?
+}
+
+enum Role {
+    USER
+    LAWYER
+    ADMIN
 }
 
 model VerificationToken {

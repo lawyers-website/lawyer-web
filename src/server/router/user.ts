@@ -1,51 +1,33 @@
 import { createRouter } from './context';
 import { z } from 'zod';
-import bcrypt from 'bcryptjs';
-import { prisma } from 'src/server/db/client';
+import { createProtectedRouter } from './protected-router';
 
-export const userRouter = createRouter()
-  .mutation('signup', {
-    input: z.object({
-      name: z.string(),
-      email: z.string().email(),
-      password: z.string(),
-    }),
-    async resolve({ input }) {
-      const password = await bcrypt.hash(input.password, 10);
+export const userRouter = createProtectedRouter().mutation('lawyerForm', {
+  input: z.object({
+    institution: z.string(),
+    course: z.string(),
+    experience: z.number(),
+  }),
+  async resolve({ input, ctx }) {
+    await ctx.prisma.user.update({
+      where: {
+        id: ctx.session.user.id,
+      },
 
-      try {
-        await prisma.user.create({
-          data: {
-            email: input.email,
-            name: input.name,
-            password: password,
+      data: {
+        role: 'LAWYER',
+        lawyerDetails: {
+          create: {
+            course: input.course,
+            experience: input.experience,
+            institution: input.institution,
           },
-        });
-        return {
-          success: true,
-          message: 'Account created',
-        };
-      } catch (error) {
-        return {
-          success: false,
-          error,
-        };
-      }
-    },
-  })
-  .mutation('isEmailExists', {
-    input: z.string().email(),
-    async resolve({ input }) {
-      const isEmailExists = Boolean(
-        await prisma.user.findUnique({
-          where: {
-            email: input,
-          },
-        })
-      );
+        },
+      },
+    });
 
-      return {
-        isEmailExists,
-      };
-    },
-  });
+    return {
+      message: 'Lawyer details added successfully',
+    };
+  },
+});

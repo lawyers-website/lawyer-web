@@ -14,9 +14,11 @@ import {
 import { Formik, Form } from 'formik';
 import { z } from 'zod';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
+import { trpc } from '../../utils/trpc';
 import FormInput from '../FormikCompo/FormInput';
 
 export default function Details() {
+  const lawyerFormMutation = trpc.useMutation(['user.lawyerForm']);
   const items = [
     'CONTRACTS',
     'COMPANY LAW',
@@ -34,18 +36,17 @@ export default function Details() {
     education: z.object({
       institution: z.string(),
       course: z.string(),
-      year: z.number(),
     }),
     exyears: z.number(),
     languages: z.string(),
   });
 
-  const initialValues = {
+  const initialValues: z.infer<typeof formSchema> = {
     education: {
       institution: '',
       course: '',
     },
-    exyear: 0,
+    exyears: 0,
     languages: '',
   };
 
@@ -56,7 +57,10 @@ export default function Details() {
       px={{ base: '0', sm: '8' }}
     >
       <Stack spacing='6'>
-        <Heading textAlign='center' size={useBreakpointValue({ base: 'xs', md: 'sm' })}>
+        <Heading
+          textAlign='center'
+          size={useBreakpointValue({ base: 'xs', md: 'sm' })}
+        >
           Fill Your Details
         </Heading>
         <Box
@@ -69,65 +73,63 @@ export default function Details() {
           <Formik
             initialValues={initialValues}
             onSubmit={(values, { setSubmitting }) => {
-              setSubmitting(false);
+              console.log('called');
+              lawyerFormMutation
+                .mutateAsync({
+                  course: values.education.course,
+                  experience: values.exyears,
+                  institution: values.education.institution,
+                })
+                .then((res) => {
+                  console.log(res.message);
+                  setSubmitting(false);
+                });
             }}
             validationSchema={toFormikValidationSchema(formSchema)}
           >
-            {({ values, isSubmitting }) => (
-              <Form style={{ width: '100%' }}>
-                <VStack alignItems='flex-start' spacing='6'>
-                  <Heading size='xs'>Education :</Heading>
-                  <VStack alignItems='flex-start' pl='1.5rem' spacing='4'>
+            {({ errors }) => {
+              return (
+                <Form style={{ width: '100%' }}>
+                  <VStack alignItems='flex-start' spacing='6'>
+                    <Heading size='xs'>Education :</Heading>
+                    <VStack alignItems='flex-start' pl='1.5rem' spacing='4'>
+                      <FormInput
+                        name='education.institution'
+                        id='institution'
+                        label='Educational Institution'
+                        width={{ base: '20rem', md: '25rem', lg: '33rem' }}
+                      />
+                      <FormInput
+                        name='education.course'
+                        id='course'
+                        label='Course'
+                        width={{ base: '20rem', md: '25rem', lg: '33rem' }}
+                      />
+                    </VStack>
                     <FormInput
-                      name='education.institution'
-                      id='institution'
-                      label='Educational Institution'
-                      width={{ base: '20rem', md: '25rem', lg: '33rem' }}
-                    />
-                    <FormInput
-                      name='education.course'
-                      id='course'
-                      label='Course'
-                      width={{ base: '20rem', md: '25rem', lg: '33rem' }}
-                    />
-                    <FormInput
+                      name='exyears'
                       type='number'
-                      name='education.year'
-                      id='year'
-                      label='Graduation Year'
-                      width={{ base: '20rem', md: '25rem', lg: '33rem' }}
+                      label='Year of Experience'
+                      width={{ base: '23rem', md: '28rem', lg: '35rem' }}
+                    />
+                    <FormInput
+                      name='languages'
+                      id='languages'
+                      label='Languages'
+                      width={{ base: '23rem', md: '28rem', lg: '35rem' }}
                     />
                   </VStack>
-                  <FormInput
-                    type='number'
-                    name='exyear'
-                    id='exyear'
-                    label='Year of Experience'
-                    width={{ base: '23rem', md: '28rem', lg: '35rem' }}
-                  />
-                  <FormInput
-                    name='languages'
-                    id='languages'
-                    label='Languages'
-                    width={{ base: '23rem', md: '28rem', lg: '35rem' }}
-                  />
-
-                  <FormLabel htmlFor='year'>Expertise As</FormLabel>
-                  <Select width={{ base: '23rem', md: '28rem', lg: '35rem' }}>
-                    {items.map((item) => (
-                      <option key={item} value={item}>
-                        {item}
-                      </option>
-                    ))}
-                  </Select>
-                  <FormLabel htmlFor='description'>Description</FormLabel>
-                  <Textarea width={{ base: '23rem', md: '28rem', lg: '35rem' }} id='description' />
-                </VStack>
-                <Button mt='16px' float='left' type='submit' variant='primary'>
-                  Submit
-                </Button>
-              </Form>
-            )}
+                  <Button
+                    mt='16px'
+                    float='left'
+                    type='submit'
+                    variant='primary'
+                  >
+                    Submit
+                  </Button>
+                </Form>
+              );
+            }}
           </Formik>
         </Box>
       </Stack>

@@ -19,6 +19,11 @@ const Search = () => {
     base: 'none',
     sm: useColorModeValue('md', 'dark-lg'),
   };
+  const listBackground = useColorModeValue('#FFFFFF', 'gray.800');
+  const listItemBackground = useColorModeValue(
+    'rgba(0, 0, 0, 0.08)',
+    '#2D3748'
+  );
   const searchItems = [
     'Civil Law',
     'Criminal Law',
@@ -48,8 +53,8 @@ const Search = () => {
       {showBoxShadow && (
         <Box position='relative'>
           <List
-            spacing={3}
-            backgroundColor='gray.800'
+            spacing={1}
+            backgroundColor={listBackground}
             w='100%'
             position='absolute'
             boxShadow={showBoxShadow ? boxShadowValue : undefined}
@@ -61,8 +66,8 @@ const Search = () => {
               <ListItem
                 css={{
                   ':hover': {
-                    backgroundColor: '#2D3748',
                     cursor: 'pointer',
+                    backgroundColor: listItemBackground,
                   },
                 }}
                 pl={3}

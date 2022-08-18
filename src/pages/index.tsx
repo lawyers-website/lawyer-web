@@ -1,6 +1,6 @@
-import { getSession } from 'next-auth/react';
-import { Home, Opening, Header, Jumbotron, Footer } from '../components';
-import { GetServerSideProps } from 'next';
+import type { GetServerSidePropsContext } from "next";
+import { getSession } from "next-auth/react";
+import { Home, Opening, Header, Jumbotron, Footer } from "../components";
 
 export default function Index() {
   return (
@@ -14,14 +14,14 @@ export default function Index() {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const session = await getSession(ctx);
   const isUser = !!session?.user;
 
   if (isUser) {
     return {
       redirect: {
-        destination: '/user/user-in',
+        destination: "/user/user-in",
         permanent: false,
       },
     };

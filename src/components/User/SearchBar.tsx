@@ -21,6 +21,11 @@ const Search = () => {
     base: "none",
     sm: useColorModeValue("md", "dark-lg"),
   };
+  const listBackground = useColorModeValue("#FFFFFF", "gray.800");
+  const listItemBackground = useColorModeValue(
+    "rgba(0, 0, 0, 0.08)",
+    "#2D3748"
+  );
   const searchItems = [
     "Civil Law",
     "Criminal Law",

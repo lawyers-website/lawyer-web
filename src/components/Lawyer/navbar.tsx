@@ -21,6 +21,7 @@ import { MdAccountCircle } from "react-icons/md";
 import { IoSearch } from "react-icons/io5";
 import { FiSettings } from "react-icons/fi";
 import { RiQuestionLine } from "react-icons/ri";
+import { signOut } from "next-auth/react";
 
 export default function Navbar() {
   const router = useRouter();
@@ -43,9 +44,17 @@ export default function Navbar() {
             {isDesktop ? (
               <Flex justify="space-between" flex="1">
                 <ButtonGroup variant="link" spacing="8">
-                  {["Home", "Dashboard", "Orders", "Tasks"].map((item) => (
-                    <Button key={item}>{item}</Button>
-                  ))}
+                  <Button onClick={() => router.push("/user/user-in")}>
+                    Home
+                  </Button>
+                  <Button onClick={() => router.push("/user/inbox")}>
+                    Messages
+                  </Button>
+                  <Button onClick={() => router.push("/user/orders")}>
+                    Orders
+                  </Button>
+                  <Button>Bookmarks</Button>
+                  <Button>Transcations</Button>
                 </ButtonGroup>
                 <HStack spacing="3">
                   <IoSearch size={22} />
@@ -65,7 +74,7 @@ export default function Navbar() {
                         <MenuItem>Docs</MenuItem>
                         <MenuItem>FAQ</MenuItem>
                         <Button
-                          onClick={() => router.push("/")}
+                          onClick={() => signOut({ callbackUrl: "/" })}
                           variant="ghost"
                         >
                           Sign out
@@ -92,6 +101,12 @@ export default function Navbar() {
                     <MenuGroup title="Help">
                       <MenuItem>Docs</MenuItem>
                       <MenuItem>FAQ</MenuItem>
+                      <Button
+                        onClick={() => signOut({ callbackUrl: "/" })}
+                        variant="ghost"
+                      >
+                        Sign out
+                      </Button>
                     </MenuGroup>
                   </MenuList>
                 </Menu>

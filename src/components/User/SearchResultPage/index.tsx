@@ -10,16 +10,20 @@ import {
   Heading,
   HStack,
   Image,
+  Stack,
   Text,
   useBreakpointValue,
   useColorModeValue,
+  useMediaQuery,
   VStack,
 } from "@chakra-ui/react";
 import { BsFillStarFill } from "react-icons/bs";
 import { useRouter } from "next/router";
+import MenuBar1 from "./menubar";
 
 export default function SearchResult() {
   const router = useRouter();
+  const bg = useBreakpointValue({ base: "transparent", sm: "bg-surface" });
   const items = [
     { label: "Criminal law", value: "criminal law" },
     { label: "Divorce Law", value: "divorce law" },
@@ -37,6 +41,8 @@ export default function SearchResult() {
     { label: "30 years", value: "30 years" },
   ];
   const boxShadow = useColorModeValue("md", "md-dark");
+  const [isMobile] = useMediaQuery("(max-width: 500px)");
+  const size = useBreakpointValue({ base: "xs", md: "sm" });
 
   const [value, setValue] = useState("Category");
   const [value1, setValue1] = useState("Experience");
@@ -51,54 +57,85 @@ export default function SearchResult() {
   return (
     <>
       <Navbar />
-      <HStack alignItems="flex-start" spacing={4}>
-        <VStack spacing={4} m="1rem" width="25rem">
-          <Heading size={useBreakpointValue({ base: "xs", md: "sm" })}>
-            Filter By
-          </Heading>
-          <Filter
-            items={items}
-            onChange={(newValue) => setValue(newValue)}
-            value={value}
-            placeholder={value}
-          />
-          <Filter
-            items={years}
-            onChange={(newValue) => setValue1(newValue)}
-            value={value1}
-            placeholder={value1}
-          />
-          <Button
-            variant="link"
-            onClick={() => {
-              setValue("Category");
-              setValue1("Experience");
-            }}
-          >
-            Clear filters
-          </Button>
-        </VStack>
-        <Divider orientation="vertical" height="30rem" />
+      <Stack
+        direction={{ base: "column", md: "row" }}
+        height="100%"
+        spacing={4}
+        mr="1rem"
+      >
+        {isMobile ? (
+          <Box>
+            <MenuBar1>
+              <Filter
+                items={items}
+                onChange={(newValue) => setValue(newValue)}
+                value={value}
+                placeholder={value}
+              />
+              <Filter
+                items={years}
+                onChange={(newValue) => setValue1(newValue)}
+                value={value1}
+                placeholder={value1}
+              />
+              <Button
+                variant="link"
+                onClick={() => {
+                  setValue("Category");
+                  setValue1("Experience");
+                }}
+              >
+                Clear filters
+              </Button>
+            </MenuBar1>
+          </Box>
+        ) : (
+          <VStack spacing={4} m="1rem" width="25rem">
+            <Heading size={size}>Filter By</Heading>
+            <Filter
+              items={items}
+              onChange={(newValue) => setValue(newValue)}
+              value={value}
+              placeholder={value}
+            />
+            <Filter
+              items={years}
+              onChange={(newValue) => setValue1(newValue)}
+              value={value1}
+              placeholder={value1}
+            />
+            <Button
+              variant="link"
+              onClick={() => {
+                setValue("Category");
+                setValue1("Experience");
+              }}
+            >
+              Clear filters
+            </Button>
+          </VStack>
+        )}
+        <Divider orientation="vertical" height="100%" />
         <Box
           width="100%"
           border="1px"
-          borderColor="gray.200"
+          borderColor={useColorModeValue("gray.200", "gray.200")}
           borderRadius={{ base: "none", sm: "xl" }}
-          mx="10rem"
         >
           <VStack width="100%">
             <Grid width="100%" templateColumns="repeat(1, 1fr)">
               {results.map((result) => (
                 <Box key={result.id}>
                   <Box
-                    my={3}
-                    mx={7}
-                    // bg={{ base: "transparent", sm: "bg-surface" }}
-                    bg="bg-surface"
+                    margin={{ base: "3", lg: "5" }}
+                    py={{ base: "0", sm: "6" }}
+                    px={{ base: "4", sm: "6" }}
+                    bg={bg}
                     boxShadow={boxShadow}
                     borderRadius={{ base: "none", sm: "xl" }}
                     display="flex"
-                    flexDirection="row"
+                    flexDirection={{ base: "column", md: "row" }}
+                    justifyContent="center"
                   >
                     <Image
                       rounded="md"
@@ -106,15 +143,13 @@ export default function SearchResult() {
                       alt="feature image"
                       src={result.src}
                       objectFit="fill"
+                      width={{ base: "70%", md: "auto" }}
                     />
-                    <Box
-                      pb={{ base: "3", sm: "8" }}
-                      px={{ base: "4", sm: "5" }}
-                    >
-                      <Text fontSize="1.5rem" fontWeight="bold">
+                    <Box px={{ base: "4", sm: "5" }}>
+                      <Text fontSize="1.5rem" fontWeight="bold" mb="1rem">
                         {result.name}
                       </Text>
-                      <Text>
+                      <Text mb="1rem">
                         Lorem ipsum dolor sit amet consectetur adipisicing elit.
                         Quaerat enim, inventore officiis debitis mollitia fuga
                         distinctio ex!
@@ -142,7 +177,7 @@ export default function SearchResult() {
             <Text>No more Results</Text>
           </VStack>
         </Box>
-      </HStack>
+      </Stack>
       <Footer />
     </>
   );

@@ -26,6 +26,7 @@ const Search = () => {
     "rgba(0, 0, 0, 0.08)",
     "#2D3748"
   );
+  const listHoverbg = useColorModeValue("#CBD5E0", "#2D3748");
   const searchItems = [
     "Civil Law",
     "Criminal Law",
@@ -46,7 +47,11 @@ const Search = () => {
           placeholder="Search your Lawyer"
           variant="flushed"
           onFocus={() => setBoxShadow(true)}
-          onBlur={() => setBoxShadow(false)}
+          onBlur={() => {
+            setTimeout(() => {
+              setBoxShadow(false);
+            }, 160);
+          }}
         />
         <InputLeftElement width="3rem">
           <SearchIcon w={4} h={4} />
@@ -56,7 +61,8 @@ const Search = () => {
         <Box position="relative">
           <List
             spacing={3}
-            backgroundColor="gray.800"
+            // backgroundColor="gray.800"
+            bg={{ base: "transparent", sm: "bg-surface" }}
             w="100%"
             position="absolute"
             boxShadow={showBoxShadow ? boxShadowValue : undefined}
@@ -67,16 +73,14 @@ const Search = () => {
             {searchItems.map((value, index) => (
               <ListItem
                 onClick={() => router.push("/user/searchresults")}
-                css={{
-                  ":hover": {
-                    backgroundColor: "#2D3748",
-                    cursor: "pointer",
-                  },
+                _hover={{
+                  background: listHoverbg,
+                  cursor: "pointer",
                 }}
-                pl={3}
                 pr={3}
-                pt={2}
+                pl={3}
                 pb={2}
+                pt={2}
                 key={index}
               >
                 <ListIcon as={SearchIcon} color="green.500" />

@@ -1,5 +1,5 @@
-import { Text } from "@chakra-ui/react";
+import LawyerDetails from "@/components/Lawyer/detailspage";
 
 export default function lawyer() {
-  return <Text>Lawyer Details</Text>;
+  return <LawyerDetails />;
 }

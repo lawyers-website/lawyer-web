@@ -31,6 +31,8 @@ interface props {
 export default function Navbar({ categories, setCategories }: props) {
   const router = useRouter();
   const isDesktop = useBreakpointValue({ base: false, md: false, lg: true });
+  const color = useColorModeValue("gray.700", "RGBA(0, 0, 0, 0.48)");
+  const color1 = useColorModeValue("gray.700", "gray.300");
   return (
     <Box m="0" as="section" pb={{ base: "7", md: "12" }}>
       <Box
@@ -115,6 +117,7 @@ export default function Navbar({ categories, setCategories }: props) {
                     bg={item === categories ? "gray.300" : "bg-surface"}
                     padding="2"
                     key={item}
+                    color={item === categories ? color : color1}
                     onClick={() => setCategories(item)}
                   >
                     {item}

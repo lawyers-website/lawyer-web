@@ -1,27 +1,60 @@
-import { withTRPC } from '@trpc/next';
-import type { AppRouter } from '../server/router';
-import type { AppType } from 'next/dist/shared/lib/utils';
-import superjson from 'superjson';
-import { SessionProvider } from 'next-auth/react';
-import { ChakraProvider, extendTheme } from '@chakra-ui/react';
-import { theme } from '../../pro-theme';
+import { withTRPC } from "@trpc/next";
+import type { AppRouter } from "../server/router";
+import type { AppType } from "next/dist/shared/lib/utils";
+import superjson from "superjson";
+import { SessionProvider } from "next-auth/react";
+import {
+  Box,
+  ChakraProvider,
+  extendTheme,
+  Spinner,
+  Text,
+} from "@chakra-ui/react";
+import { theme } from "../../pro-theme";
+import Router from "next/router";
+import { useState } from "react";
 
 const MyApp: AppType = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
+  const [loading, setLoading] = useState(false);
+  Router.events.on("routeChangeStart", () => {
+    setLoading(true);
+  });
+  Router.events.on("routeChangeComplete", () => {
+    setLoading(false);
+  });
   return (
     <SessionProvider session={session}>
       <ChakraProvider theme={extendTheme(theme)}>
-        <Component {...pageProps} />
+        {loading ? (
+          <Box
+            width="100%"
+            minHeight="100vh"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <Spinner
+              thickness="4px"
+              speed="0.65s"
+              emptyColor="gray.200"
+              color="blue.500"
+              size="xl"
+            />
+          </Box>
+        ) : (
+          <Component {...pageProps} />
+        )}
       </ChakraProvider>
     </SessionProvider>
   );
 };
 
 const getBaseUrl = () => {
-  if (typeof window !== 'undefined') {
-    return '';
+  if (typeof window !== "undefined") {
+    return "";
   }
   if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`; // SSR should use vercel url
 

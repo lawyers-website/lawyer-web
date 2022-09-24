@@ -10,9 +10,6 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import Boxes from './box';
-// import MyChart from './myChart';
-import MyChart1 from './myChart1';
-
 export default function Dashboard() {
   const items = [
     { title: 'ORDERS', value: '30', change: '3.78', profit: true },
@@ -44,7 +41,10 @@ export default function Dashboard() {
             OVERVIEW
           </Text>
           <ButtonGroup>
-            <Button variant='primary' size={useBreakpointValue({ base: 'sm', md: 'sm', lg: 'md' })}>
+            <Button
+              variant='primary'
+              size={useBreakpointValue({ base: 'sm', md: 'sm', lg: 'md' })}
+            >
               Month
             </Button>
             <Button
@@ -63,7 +63,6 @@ export default function Dashboard() {
           </ButtonGroup>
         </HStack>
         <Divider marginBottom='1.5rem' />
-        <MyChart1 />
       </Box>
       <Divider my='1rem' />
     </>

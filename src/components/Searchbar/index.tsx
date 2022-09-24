@@ -8,32 +8,32 @@ import {
   ListItem,
   useBreakpointValue,
   useColorModeValue,
-} from "@chakra-ui/react";
-import { SearchIcon } from "@chakra-ui/icons";
-import { useState } from "react";
-import { useRouter } from "next/router";
+} from '@chakra-ui/react';
+import { SearchIcon } from '@chakra-ui/icons';
+import { useState } from 'react';
+import { useRouter } from 'next/router';
 
 const Search = () => {
   const router = useRouter();
-  const size = useBreakpointValue({ base: "sm", md: "md" });
+  const size = useBreakpointValue({ base: 'sm', md: 'md' });
   const [showBoxShadow, setBoxShadow] = useState(false);
   const boxShadowValue = {
-    base: "none",
-    sm: useColorModeValue("md", "dark-lg"),
+    base: 'none',
+    sm: useColorModeValue('md', 'dark-lg'),
   };
-  const listBackground = useColorModeValue("#FFFFFF", "gray.800");
+  const listBackground = useColorModeValue('#FFFFFF', 'gray.800');
   const listItemBackground = useColorModeValue(
-    "rgba(0, 0, 0, 0.08)",
-    "#2D3748"
+    'rgba(0, 0, 0, 0.08)',
+    '#2D3748'
   );
-  const listHoverbg = useColorModeValue("#CBD5E0", "#2D3748");
+  const listHoverbg = useColorModeValue('#CBD5E0', '#2D3748');
   const searchItems = [
-    "Civil Law",
-    "Criminal Law",
-    "Divorce",
-    "Immigration Law",
-    "Tax Law",
-    "Medical Law",
+    'Civil Law',
+    'Criminal Law',
+    'Divorce',
+    'Immigration Law',
+    'Tax Law',
+    'Medical Law',
   ];
   return (
     <Box
@@ -43,9 +43,9 @@ const Search = () => {
     >
       <InputGroup size={size}>
         <Input
-          width="40rem"
-          placeholder="Search your Lawyer"
-          variant="flushed"
+          width='40rem'
+          placeholder='Search your Lawyer'
+          variant='flushed'
           onFocus={() => setBoxShadow(true)}
           onBlur={() => {
             setTimeout(() => {
@@ -53,18 +53,17 @@ const Search = () => {
             }, 160);
           }}
         />
-        <InputLeftElement width="3rem">
+        <InputLeftElement width='3rem'>
           <SearchIcon w={4} h={4} />
         </InputLeftElement>
       </InputGroup>
       {showBoxShadow && (
-        <Box position="relative">
+        <Box position='relative'>
           <List
             spacing={3}
-            // backgroundColor="gray.800"
-            bg={{ base: "transparent", sm: "bg-surface" }}
-            w="100%"
-            position="absolute"
+            bg={{ base: 'transparent', sm: 'bg-surface' }}
+            w='100%'
+            position='absolute'
             boxShadow={showBoxShadow ? boxShadowValue : undefined}
             borderBottomRadius={10}
             pt={3}
@@ -72,10 +71,10 @@ const Search = () => {
           >
             {searchItems.map((value, index) => (
               <ListItem
-                onClick={() => router.push("/user/searchresults")}
+                onClick={() => router.push('/user/searchresults')}
                 _hover={{
                   background: listHoverbg,
-                  cursor: "pointer",
+                  cursor: 'pointer',
                 }}
                 pr={3}
                 pl={3}
@@ -83,7 +82,7 @@ const Search = () => {
                 pt={2}
                 key={index}
               >
-                <ListIcon as={SearchIcon} color="green.500" />
+                <ListIcon as={SearchIcon} color='green.500' />
                 {value}
               </ListItem>
             ))}

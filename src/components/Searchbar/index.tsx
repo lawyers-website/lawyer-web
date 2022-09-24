@@ -71,7 +71,7 @@ const Search = () => {
           >
             {searchItems.map((value, index) => (
               <ListItem
-                onClick={() => router.push('/user/searchresults')}
+                onClick={() => router.push('/search/results')}
                 _hover={{
                   background: listHoverbg,
                   cursor: 'pointer',

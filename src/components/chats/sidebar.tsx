@@ -1,0 +1,109 @@
+import { SearchIcon } from "@chakra-ui/icons";
+import {
+  Avatar,
+  Box,
+  Button,
+  Fade,
+  Flex,
+  Input,
+  InputGroup,
+  InputRightElement,
+  ScaleFade,
+  Text,
+  useColorModeValue,
+} from "@chakra-ui/react";
+import { useState } from "react";
+
+function Chat() {
+  return (
+    <Flex
+      alignItems="center"
+      pb={2}
+      pt={2}
+      mb="1px"
+      px="3"
+      _hover={{ bg: useColorModeValue("gray.100", "gray.700") }}
+      cursor="pointer"
+      borderBottom="1px solid"
+      borderColor={useColorModeValue("gray.200", "gray.500")}
+    >
+      <Avatar marginEnd="1rem" src="" />
+      <Text>User1</Text>
+    </Flex>
+  );
+}
+
+export default function SideBar() {
+  const [searchActive, setSearchActive] = useState(false);
+  return (
+    <Flex
+      ml={{ base: "0", md: "20px" }}
+      w={{ base: "100%", md: "40%", lg: "30%" }}
+      h="85vh"
+      borderEnd="1px solid"
+      borderColor="gray.200"
+      direction="column"
+      bg="bg-surface"
+    >
+      {searchActive ? (
+        <Flex
+          h="100px"
+          w="100%"
+          alignItems="center"
+          borderBottom="1px solid"
+          borderColor="gray.200"
+          justify="space-between"
+          px="1rem"
+        >
+          <ScaleFade initialScale={0} in={searchActive}>
+            <InputGroup w="20rem">
+              <Input pr="4.5rem" placeholder="Search a username" />
+              <InputRightElement>
+                <SearchIcon />
+              </InputRightElement>
+            </InputGroup>
+          </ScaleFade>
+          <Button
+            variant="link"
+            onClick={() => setSearchActive(false)}
+            cursor="pointer"
+          >
+            Close
+          </Button>
+        </Flex>
+      ) : (
+        <Flex
+          h="100px"
+          w="100%"
+          alignItems="center"
+          borderBottom="1px solid"
+          borderColor="gray.200"
+          justify="space-between"
+          px="1rem"
+        >
+          <Text>All Conversations</Text>
+          <SearchIcon onClick={() => setSearchActive(true)} cursor="pointer" />
+        </Flex>
+      )}
+
+      <Flex
+        overflowX="scroll"
+        direction="column"
+        sx={{ scrollbarWidth: "none" }}
+      >
+        <Chat />
+        <Chat />
+        <Chat />
+        <Chat />
+        <Chat />
+        <Chat />
+        <Chat />
+        <Chat />
+        <Chat />
+        <Chat />
+        <Chat />
+        <Chat />
+      </Flex>
+    </Flex>
+  );
+}

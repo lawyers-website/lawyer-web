@@ -27,7 +27,7 @@ export default function Navbar() {
   const router = useRouter();
   const isDesktop = useBreakpointValue({ base: false, md: false, lg: true });
   return (
-    <Box m="0" as="section" pb={{ base: "7", md: "12" }}>
+    <Box mb="0" as="section" pb={{ base: "0", md: "4" }}>
       <Box
         as="nav"
         bg="bg-surface"
@@ -36,7 +36,7 @@ export default function Navbar() {
         <Container py={{ base: "4", lg: "5" }}>
           <HStack spacing="10" justify="space-between">
             <Heading
-              marginLeft="4"
+              marginLeft="0"
               size={useBreakpointValue({ base: "xs", md: "sm" })}
             >
               Lawyers

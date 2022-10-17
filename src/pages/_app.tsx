@@ -3,6 +3,7 @@ import type { AppRouter } from "../server/router";
 import type { AppType } from "next/dist/shared/lib/utils";
 import superjson from "superjson";
 import { SessionProvider } from "next-auth/react";
+import NProgress from "nprogress";
 import {
   Box,
   ChakraProvider,
@@ -13,6 +14,7 @@ import {
 import { theme } from "../../pro-theme";
 import Router from "next/router";
 import { useState } from "react";
+import Head from "next/head";
 
 const MyApp: AppType = ({
   Component,
@@ -20,14 +22,25 @@ const MyApp: AppType = ({
 }) => {
   const [loading, setLoading] = useState(false);
   Router.events.on("routeChangeStart", () => {
-    setLoading(true);
+    // setLoading(true);
+    NProgress.start();
   });
   Router.events.on("routeChangeComplete", () => {
     setLoading(false);
+    NProgress.done();
   });
   return (
     <SessionProvider session={session}>
       <ChakraProvider theme={extendTheme(theme)}>
+        <Head>
+          <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css"
+            integrity="sha512-42kB9yDlYiCEfx2xVwq0q7hT4uf26FUgSIZBK8uiaEnTdShXjwr8Ip1V4xGJMg3mHkUt9nNuTDxunHF0/EgxLQ=="
+            crossOrigin="anonymous"
+            referrerPolicy="no-referrer"
+          />
+        </Head>
         {loading ? (
           <Box
             width="100%"

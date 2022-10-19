@@ -22,7 +22,7 @@ const MyApp: AppType = ({
 }) => {
   const [loading, setLoading] = useState(false);
   Router.events.on("routeChangeStart", () => {
-    // setLoading(true);
+    setLoading(true);
     NProgress.start();
   });
   Router.events.on("routeChangeComplete", () => {

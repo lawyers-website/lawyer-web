@@ -26,12 +26,19 @@ export async function getServerSideProps(ctx: any) {
     },
   });
 
+  const user = await prisma.user.findUnique({
+    where: {
+      id: id,
+    },
+  });
+
   if (Reviews && Reviews?.length > 0) {
     return {
       props: {
         lawyer: lawyer,
         isReviewed: true,
         reviews: JSON.parse(JSON.stringify(reviews)),
+        username: user?.name,
       },
     };
   }
@@ -41,6 +48,7 @@ export async function getServerSideProps(ctx: any) {
       lawyer: JSON.parse(JSON.stringify(lawyer)),
       isReviewed: false,
       reviews: JSON.parse(JSON.stringify(reviews)),
+      username: user?.name,
     },
   };
 }
@@ -49,12 +57,19 @@ export default function Lawyer({
   lawyer,
   isReviewed,
   reviews,
+  username,
 }: {
   lawyer: LawyerDetails | null;
   isReviewed: Boolean;
   reviews: Reviews[];
+  username: string;
 }) {
   return (
-    <LawyerDetail lawyer={lawyer} isReviewed={isReviewed} reviews={reviews} />
+    <LawyerDetail
+      lawyer={lawyer}
+      isReviewed={isReviewed}
+      reviews={reviews}
+      username={username}
+    />
   );
 }

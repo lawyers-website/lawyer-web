@@ -15,7 +15,7 @@ export default function Sidebar() {
     <>
       <Navbar />
       {useBreakpointValue({
-        base: <SideBar />,
+        base: <Chat />,
         md: (
           <HStack alignItems="flex-start" spacing={0}>
             <SideBar />

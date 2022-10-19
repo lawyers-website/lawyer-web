@@ -16,30 +16,46 @@ import { StarIcon } from "@chakra-ui/icons";
 import { FaUserCircle } from "react-icons/fa";
 import { LawyerDetails, Reviews } from "@prisma/client";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "firebaseconfig";
+import { useCollection } from "react-firebase-hooks/firestore";
+import { useState } from "react";
 
 export default function LawyerDetail({
   lawyer,
   isReviewed,
   reviews,
+  username,
 }: {
   lawyer: LawyerDetails | null;
   isReviewed: Boolean;
   reviews: Reviews[];
+  username: string;
 }) {
   const router = useRouter();
-  const reviews1 = [
-    { name: "Client1", time: "1 month ago" },
-    { name: "Client2", time: "4 weeks ago" },
-    { name: "Client3", time: "2 weeeks ago" },
-    { name: "Client4", time: "1 week ago" },
-    { name: "Client5", time: "2 months ago" },
-    { name: "Client6", time: "3 months ago" },
-    { name: "Client7", time: "1 week ago" },
-    { name: "Client7", time: "2 days ago" },
-    { name: "Client7", time: "5 days ago" },
-    { name: "Client7", time: "1 month ago" },
-  ];
+  const { data: session } = useSession();
   const boxShadow = useColorModeValue("md", "md-dark");
+  const [snapshot] = useCollection(collection(db, "chats"));
+  const handleClick = async () => {
+    const chats: any = snapshot?.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    const chat = chats?.filter(
+      (data: any) =>
+        data.users?.includes(session?.user?.name) &&
+        data.users?.includes(username)
+    );
+    if (chat.length === 0) {
+      const c = await addDoc(collection(db, "chats"), {
+        users: [username, session?.user?.name],
+      });
+      router.push(`/inbox/${c.id}`);
+    }
+
+    chat.map((c: any) => router.push(`/inbox/${c.id}`));
+  };
 
   return (
     <>
@@ -82,7 +98,9 @@ export default function LawyerDetail({
                     {lawyer.state} ,{lawyer.country}
                   </Text>
                 </HStack>
-                <Button variant="outline">Message</Button>
+                <Button variant="outline" onClick={(e) => handleClick()}>
+                  Message
+                </Button>
               </VStack>
             </Box>
             <Box>

@@ -90,7 +90,6 @@ export default function Chat() {
     getDoc(docRef).then((doc) => {
       setData(doc.data());
     });
-    console.log(data);
   }, [id]);
   const bg1 = useColorModeValue("blue.100", "blue.500");
   const bg2 = useColorModeValue("green.100", "green.500");

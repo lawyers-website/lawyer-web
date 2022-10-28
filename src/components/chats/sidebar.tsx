@@ -1,9 +1,7 @@
 import { SearchIcon } from "@chakra-ui/icons";
 import {
   Avatar,
-  Box,
   Button,
-  Fade,
   Flex,
   Input,
   InputGroup,
@@ -11,29 +9,74 @@ import {
   ScaleFade,
   Text,
   useColorModeValue,
+  VStack,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { useCollection } from "react-firebase-hooks/firestore";
-import { collection } from "@firebase/firestore";
+import {
+  useCollection,
+  useCollectionData,
+} from "react-firebase-hooks/firestore";
+import { collection, query, orderBy, limit } from "@firebase/firestore";
 import { db } from "firebaseconfig";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 
+const getUser = (users: string[], currentUser: any) =>
+  users?.filter((user) => user !== currentUser);
+
+const Chat = ({ chat }: { chat: any }) => {
+  const router = useRouter();
+  const { data: session } = useSession();
+  const hoverBg = useColorModeValue("gray.100", "gray.700");
+  const bg = useColorModeValue("gray.200", "gray.500");
+  const q = query(
+    collection(db, `chats/${chat.id}/messages`),
+    orderBy("timestamp", "desc"),
+    limit(1)
+  );
+  const [messages] = useCollectionData(q);
+  return (
+    <Flex
+      alignItems="center"
+      key={chat.id}
+      pb={2}
+      pt={2}
+      mb="1px"
+      px="3"
+      _hover={{ bg: hoverBg }}
+      cursor="pointer"
+      borderBottom="1px solid"
+      borderColor={bg}
+      onClick={() => router.push(`/inbox/${chat.id}`)}
+    >
+      <Avatar marginEnd="1rem" src="" />
+      <VStack alignItems="flex-start">
+        <Text fontWeight="700" fontSize={20}>
+          {getUser(chat.users, session?.user?.name)}
+        </Text>
+        {messages &&
+          (messages[0]?.sender === session?.user?.name ? (
+            <Text fontSize={15} opacity="0.7">
+              Me : {messages[0]?.text.slice(0, 40)}
+            </Text>
+          ) : (
+            <Text fontSize={15} opacity={chat.receiverhasread ? "0.7" : "1"}>
+              {messages[0]?.text.slice(0, 40)}
+            </Text>
+          ))}
+      </VStack>
+    </Flex>
+  );
+};
+
 export default function SideBar() {
   const [searchActive, setSearchActive] = useState(false);
   const { data: session } = useSession();
-  const router = useRouter();
-  const [snapshot, loading, error] = useCollection(collection(db, "chats"));
+  const [snapshot] = useCollection(collection(db, "chats"));
   const chats: any = snapshot?.docs.map((doc) => ({
     id: doc.id,
     ...doc.data(),
   }));
-
-  const hoverBg = useColorModeValue("gray.100", "gray.700");
-  const bg = useColorModeValue("gray.200", "gray.500");
-
-  const getUser = (users: string[], currentUser: any) =>
-    users?.filter((user) => user !== currentUser);
 
   return (
     <Flex
@@ -94,22 +137,7 @@ export default function SideBar() {
         {chats
           ?.filter((chat: any) => chat.users.includes(session?.user?.name))
           .map((chat: any) => (
-            <Flex
-              alignItems="center"
-              key={chat.id}
-              pb={2}
-              pt={2}
-              mb="1px"
-              px="3"
-              _hover={{ bg: hoverBg }}
-              cursor="pointer"
-              borderBottom="1px solid"
-              borderColor={bg}
-              onClick={() => router.push(`/inbox/${chat.id}`)}
-            >
-              <Avatar marginEnd="1rem" src="" />
-              <Text>{getUser(chat.users, session?.user?.name)}</Text>
-            </Flex>
+            <Chat chat={chat} key={chat.id} />
           ))}
       </Flex>
     </Flex>

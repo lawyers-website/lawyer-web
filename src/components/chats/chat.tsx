@@ -3,13 +3,11 @@ import {
   Button,
   Flex,
   FormControl,
-  HStack,
   Input,
   Text,
   useColorModeValue,
-  useFocusEffect,
 } from "@chakra-ui/react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   addDoc,
   collection,
@@ -18,16 +16,12 @@ import {
   orderBy,
   query,
   serverTimestamp,
+  updateDoc,
 } from "firebase/firestore";
 import { db } from "firebaseconfig";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import {
-  useCollection,
-  useCollectionData,
-  useDocumentData,
-} from "react-firebase-hooks/firestore";
-import { timeStamp } from "console";
+import { useCollectionData } from "react-firebase-hooks/firestore";
 
 const Topbar = ({ name }: { name: any }) => {
   return (
@@ -58,6 +52,8 @@ const Bottombar = ({ id }: { id: string | undefined | string[] }) => {
       timestamp: serverTimestamp(),
     });
     setInput("");
+    const docRef = doc(db, "chats", id as string);
+    updateDoc(docRef, { receiverhasread: false });
   };
   return (
     <Flex p={3}>
@@ -81,16 +77,31 @@ export default function Chat() {
   const id = router.query.username;
   const [data, setData] = useState<any>();
   const { data: session } = useSession();
+  const bottomOfChat = useRef<HTMLDivElement>(null);
   const q = query(collection(db, `chats/${id}/messages`), orderBy("timestamp"));
   const [messages] = useCollectionData(q);
-  // const [chat] = useDocumentData(doc(db, "chats", id ));
-  // console.log(chat);
   useEffect(() => {
-    const docRef = doc(db, "chats", id as string);
-    getDoc(docRef).then((doc) => {
-      setData(doc.data());
-    });
+    try {
+      const docRef = doc(db, "chats", id as string);
+      getDoc(docRef).then((doc1) => {
+        setData(doc1.data());
+      });
+    } catch (error) {
+      return;
+    }
   }, [id]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (bottomOfChat.current) {
+        bottomOfChat.current.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+    }, 100);
+  }, [messages]);
+
   const bg1 = useColorModeValue("blue.100", "blue.500");
   const bg2 = useColorModeValue("green.100", "green.500");
   const getUser = (users: string[], currentUser: any) =>
@@ -127,6 +138,7 @@ export default function Chat() {
             <Text>{message.text}</Text>
           </Flex>
         ))}
+        <Flex ref={bottomOfChat}></Flex>
       </Flex>
       <Bottombar id={id} />
     </Flex>

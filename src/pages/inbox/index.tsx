@@ -1,13 +1,7 @@
 import SideBar from "@/components/chats/sidebar";
 import Navbar from "@/components/Lawyer/navbar";
 import { AttachmentIcon } from "@chakra-ui/icons";
-import {
-  Avatar,
-  Flex,
-  HStack,
-  Text,
-  useBreakpointValue,
-} from "@chakra-ui/react";
+import { Flex, HStack, Text, useBreakpointValue } from "@chakra-ui/react";
 
 export default function Sidebar() {
   return (

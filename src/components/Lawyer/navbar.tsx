@@ -47,7 +47,7 @@ export default function Navbar() {
                   <Button onClick={() => router.push("/user/user-in")}>
                     Home
                   </Button>
-                  <Button onClick={() => router.push("/user/inbox")}>
+                  <Button onClick={() => router.push("/inbox")}>
                     Messages
                   </Button>
                   <Button onClick={() => router.push("/user/orders")}>

@@ -1,7 +1,7 @@
-import Filter from './filter';
-import Navbar from '../User/navbar';
-import Footer from '@/components/home/footer';
-import { useState, useEffect } from 'react';
+import Filter from "./filter";
+import Navbar from "../User/navbar";
+import Footer from "@/components/home/footer";
+import { useState } from "react";
 import {
   Box,
   Button,
@@ -16,11 +16,11 @@ import {
   useColorModeValue,
   useMediaQuery,
   VStack,
-} from '@chakra-ui/react';
-import { BsFillStarFill } from 'react-icons/bs';
-import { useRouter } from 'next/router';
-import MenuBar1 from './menubar';
-import { LawyerDetails } from '@prisma/client';
+} from "@chakra-ui/react";
+import { BsFillStarFill } from "react-icons/bs";
+import { useRouter } from "next/router";
+import MenuBar1 from "./menubar";
+import { LawyerDetails } from "@prisma/client";
 
 export default function SearchResult({
   lawyers,
@@ -28,37 +28,57 @@ export default function SearchResult({
   lawyers: LawyerDetails[];
 }) {
   const router = useRouter();
-  const bg = useBreakpointValue({ base: 'transparent', sm: 'bg-surface' });
+  const { query } = router.query;
+
+  const bg = useBreakpointValue({ base: "transparent", sm: "bg-surface" });
   const items = [
-    { label: 'Criminal law', value: 'criminal law' },
-    { label: 'Divorce Law', value: 'divorce law' },
-    { label: 'Civil Law', value: 'civil law' },
-    { label: 'Medical Law', value: 'medical law' },
-    { label: 'Tax Law', value: 'tax law' },
+    { label: "Criminal law", value: "criminal law" },
+    { label: "Divorce Law", value: "divorce law" },
+    { label: "Civil Law", value: "civil law" },
+    { label: "Medical Law", value: "medical law" },
+    { label: "Tax Law", value: "tax law" },
   ];
 
   const years = [
-    { label: '5 years', value: '5 years' },
-    { label: '10 years', value: '10 years' },
-    { label: '15 years', value: '15 years' },
-    { label: '20 years', value: '20 years' },
-    { label: '5 years', value: '25 years' },
-    { label: '30 years', value: '30 years' },
+    { label: "5 years", value: 5 },
+    { label: "10 years", value: 10 },
+    { label: "15 years", value: 15 },
+    { label: "20 years", value: 20 },
+    { label: "25 years", value: 25 },
+    { label: "30 years", value: 30 },
   ];
-  const boxShadow = useColorModeValue('md', 'md-dark');
-  const [isMobile] = useMediaQuery('(max-width: 900px)');
-  const size = useBreakpointValue({ base: 'xs', md: 'sm' });
+  const boxShadow = useColorModeValue("md", "md-dark");
+  const [isMobile] = useMediaQuery("(max-width: 900px)");
+  const size = useBreakpointValue({ base: "xs", md: "sm" });
 
-  const [value, setValue] = useState('Category');
-  const [value1, setValue1] = useState('Experience');
+  const [value, setValue] = useState("Category");
+  const [value1, setValue1] = useState("Experience");
+  const usernames = lawyers.map((lawyer) => lawyer.fullName);
+
+  let filteredLawyers = lawyers.filter(
+    (lawyer) =>
+      lawyer.fullName
+        .toLowerCase()
+        .replace(/\s+/g, "")
+        .includes((query as string).toLowerCase().replace(/\s+/g, "")) ||
+      lawyer.expertise
+        .toLowerCase()
+        .replace(/\s+/g, "")
+        .includes((query as string).toLowerCase().replace(/\s+/g, "")) ||
+      lawyer.services
+        .toLowerCase()
+        .replace(/\s+/g, "")
+        .includes((query as string).toLowerCase().replace(/\s+/g, ""))
+  );
+
   return (
     <>
-      <Navbar />
+      <Navbar usernames={usernames} />
       <Stack
-        direction={{ base: 'column', lg: 'row' }}
-        height='100%'
+        direction={{ base: "column", lg: "row" }}
+        height="100%"
         spacing={4}
-        mr='1rem'
+        mr="1rem"
       >
         {isMobile ? (
           <Box>
@@ -76,10 +96,10 @@ export default function SearchResult({
                 placeholder={value1}
               />
               <Button
-                variant='link'
+                variant="link"
                 onClick={() => {
-                  setValue('Category');
-                  setValue1('Experience');
+                  setValue("Category");
+                  setValue1("Experience");
                 }}
               >
                 Clear filters
@@ -87,7 +107,7 @@ export default function SearchResult({
             </MenuBar1>
           </Box>
         ) : (
-          <VStack spacing={4} m='1rem' width='25rem'>
+          <VStack spacing={4} m="1rem" width="25rem">
             <Heading size={size}>Filter By</Heading>
             <Filter
               items={items}
@@ -102,61 +122,61 @@ export default function SearchResult({
               placeholder={value1}
             />
             <Button
-              variant='link'
+              variant="link"
               onClick={() => {
-                setValue('Category');
-                setValue1('Experience');
+                setValue("Category");
+                setValue1("Experience");
               }}
             >
               Clear filters
             </Button>
           </VStack>
         )}
-        <Divider orientation='vertical' height='100%' />
+        <Divider orientation="vertical" height="100%" />
         <Box
-          width='100%'
-          border='1px'
-          borderColor={useColorModeValue('gray.200', 'gray.200')}
-          borderRadius={{ base: 'none', sm: 'xl' }}
+          width="100%"
+          border="1px"
+          borderColor={useColorModeValue("gray.200", "gray.200")}
+          borderRadius={{ base: "none", sm: "xl" }}
         >
-          <VStack width='100%'>
-            <Grid width='100%' templateColumns='repeat(1, 1fr)'>
-              {lawyers.map((result) => (
+          <VStack width="100%">
+            <Grid width="100%" templateColumns="repeat(1, 1fr)">
+              {filteredLawyers.map((result) => (
                 <Box key={result.lawyerId}>
                   <Box
-                    margin={{ base: '3', lg: '5' }}
-                    py={{ base: '0', sm: '6' }}
-                    px={{ base: '4', sm: '6' }}
+                    margin={{ base: "3", lg: "5" }}
+                    py={{ base: "0", sm: "6" }}
+                    px={{ base: "4", sm: "6" }}
                     bg={bg}
                     boxShadow={boxShadow}
-                    borderRadius={{ base: 'none', sm: 'xl' }}
-                    display='flex'
-                    flexDirection={{ base: 'column', md: 'row' }}
-                    justifyContent={{ base: 'center', md: 'flex-start' }}
-                    alignItems='center'
+                    borderRadius={{ base: "none", sm: "xl" }}
+                    display="flex"
+                    flexDirection={{ base: "column", md: "row" }}
+                    justifyContent={{ base: "center", md: "flex-start" }}
+                    alignItems="center"
                   >
                     <Image
-                      rounded='md'
-                      height='10em'
-                      alt='Lawyer Image'
+                      rounded="md"
+                      height="10em"
+                      alt="Lawyer Image"
                       src={result.image as string}
-                      w='14em'
+                      w="14em"
                     />
-                    <Box w='100%' px={{ base: '4', sm: '5' }}>
-                      <Text fontSize='1.5rem' fontWeight='bold' mb='1rem'>
+                    <Box w="100%" px={{ base: "4", sm: "5" }}>
+                      <Text fontSize="1.5rem" fontWeight="bold" mb="1rem">
                         {result.fullName}
                       </Text>
-                      <Text mb='1rem'>{result.description}</Text>
-                      <HStack m='3px' spacing={5}>
+                      <Text mb="1rem">{result.description}</Text>
+                      <HStack m="3px" spacing={5}>
                         <HStack spacing={2}>
-                          <BsFillStarFill color='#ED8936' />
+                          <BsFillStarFill color="#ED8936" />
                           <Text>{result.rating}</Text>
                         </HStack>
                         <Text>{result.numofreviews} reviews</Text>
                       </HStack>
                       <Button
-                        float='right'
-                        variant='link'
+                        float="right"
+                        variant="link"
                         onClick={() =>
                           router.push(`/lawyer/${result.lawyerId}`)
                         }

@@ -1,6 +1,6 @@
-import SearchResult from '@/components/SearchResultPage';
-import { LawyerDetails } from '@prisma/client';
-import { prisma } from 'src/server/db/client';
+import SearchResult from "@/components/SearchResultPage";
+import { LawyerDetails } from "@prisma/client";
+import { prisma } from "src/server/db/client";
 
 export default function SearchResultPage({
   lawyers,

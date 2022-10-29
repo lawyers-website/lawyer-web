@@ -10,22 +10,8 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { MdLocationOn } from "react-icons/md";
-import { StarIcon } from "@chakra-ui/icons";
-import { FaUserCircle } from "react-icons/fa";
 
-export default function LawyerDetails() {
-  const reviews = [
-    { name: "Client1", time: "1 month ago" },
-    { name: "Client2", time: "4 weeks ago" },
-    { name: "Client3", time: "2 weeeks ago" },
-    { name: "Client4", time: "1 week ago" },
-    { name: "Client5", time: "2 months ago" },
-    { name: "Client6", time: "3 months ago" },
-    { name: "Client7", time: "1 week ago" },
-    { name: "Client7", time: "2 days ago" },
-    { name: "Client7", time: "5 days ago" },
-    { name: "Client7", time: "1 month ago" },
-  ];
+export default function Profile() {
   return (
     <>
       <Box

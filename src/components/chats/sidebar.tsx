@@ -50,7 +50,7 @@ const Chat = ({ chat }: { chat: any }) => {
       onClick={() => router.push(`/inbox/${chat.id}`)}
     >
       <Avatar marginEnd="1rem" src="" />
-      <VStack alignItems="flex-start">
+      <VStack spacing={0} alignItems="flex-start">
         <Text fontWeight="700" fontSize={20}>
           {getUser(chat.users, session?.user?.name)}
         </Text>

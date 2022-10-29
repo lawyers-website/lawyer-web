@@ -11,10 +11,11 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { CheckIcon, ChevronDownIcon } from "@chakra-ui/icons";
+import { AnyARecord } from "dns";
 
 interface FormSelectProps {
   items: {
-    value: string;
+    value: number | string;
     label: string;
   }[];
   value: any;

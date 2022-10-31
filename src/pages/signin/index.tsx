@@ -19,6 +19,7 @@ import FormInput from "src/components/FormikCompo/FormInput";
 import OAuthButtonGroup from "src/components/Oauth";
 import PasswordField from "src/components/FormikCompo/PasswordField";
 import { getSession, signIn } from "next-auth/react";
+import { useState } from "react";
 
 export const AuthError = {
   WRONG_PASSWORD: 1,
@@ -56,6 +57,7 @@ const setFormikErrors = (
 };
 
 export default function App() {
+  const [isLoadiing, setLoading] = useState(false);
   const router = useRouter();
   return (
     <Container
@@ -91,11 +93,13 @@ export default function App() {
           <Formik
             initialValues={{ email: "", password: "" }}
             onSubmit={(values, { setSubmitting, setErrors }) => {
+              setLoading(true);
               signIn("credentials", {
                 ...values,
                 redirect: false,
               }).then((value) => {
                 if (value?.error) setFormikErrors(value?.error, setErrors);
+                setLoading(false);
                 if (value?.ok) router.push("/user/user-in");
                 setSubmitting(false);
               });
@@ -127,7 +131,11 @@ export default function App() {
                     </Button>
                   </HStack>
                   <Stack spacing="6">
-                    <Button variant="primary" type="submit">
+                    <Button
+                      variant="primary"
+                      type="submit"
+                      isLoading={isLoadiing}
+                    >
                       Sign in
                     </Button>
                     <HStack>

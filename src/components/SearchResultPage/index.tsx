@@ -21,6 +21,8 @@ import { BsFillStarFill } from "react-icons/bs";
 import { useRouter } from "next/router";
 import MenuBar1 from "./menubar";
 import { LawyerDetails } from "@prisma/client";
+import { useSession } from "next-auth/react";
+import { Home } from "..";
 
 export default function SearchResult({
   lawyers,
@@ -29,6 +31,7 @@ export default function SearchResult({
 }) {
   const router = useRouter();
   const { query } = router.query;
+  const { data: session } = useSession();
 
   const bg = useBreakpointValue({ base: "transparent", sm: "bg-surface" });
   const items = [
@@ -53,7 +56,6 @@ export default function SearchResult({
 
   const [value, setValue] = useState("Category");
   const [value1, setValue1] = useState("Experience");
-  const usernames = lawyers.map((lawyer) => lawyer.fullName);
 
   let filteredLawyers = lawyers.filter(
     (lawyer) =>
@@ -73,12 +75,13 @@ export default function SearchResult({
 
   return (
     <>
-      <Navbar usernames={usernames} />
+      {session?.user ? <Navbar /> : <Home />}
       <Stack
         direction={{ base: "column", lg: "row" }}
         height="100%"
         spacing={4}
         mr="1rem"
+        position="relative"
       >
         {isMobile ? (
           <Box>
@@ -132,11 +135,11 @@ export default function SearchResult({
             </Button>
           </VStack>
         )}
-        <Divider orientation="vertical" height="100%" />
+        <Divider orientation="vertical" />
         <Box
           width="100%"
           border="1px"
-          borderColor={useColorModeValue("gray.200", "gray.200")}
+          borderColor={useColorModeValue("gray.200", "gray.600")}
           borderRadius={{ base: "none", sm: "xl" }}
         >
           <VStack width="100%">

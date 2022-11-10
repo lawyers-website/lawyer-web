@@ -110,4 +110,20 @@ export const userRouter = createProtectedRouter()
         return error;
       }
     },
+  })
+  .mutation("getLawyers", {
+    input: z.string(),
+    async resolve({ input, ctx }) {
+      const lawyers = await ctx.prisma.lawyerDetails.findMany({
+        take: 6,
+        where: {
+          fullName: {
+            contains: input,
+            mode: "insensitive",
+          },
+        },
+      });
+      const usernames = lawyers?.map((lawyer) => lawyer.fullName);
+      return { usernames };
+    },
   });

@@ -9,15 +9,17 @@ import {
   ListItem,
   useBreakpointValue,
   useColorModeValue,
-  Button,
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { trpc } from "@/utils/trpc";
 
-const Search = ({ usernames }: { usernames: string[] }) => {
+const Search = () => {
+  const [usernames, setUsernames] = useState<string[]>([]);
+  const lawyersMutation = trpc.useMutation("util.getLawyers");
   const router = useRouter();
-  const [query, setQuery] = useState("Search");
+  const [query, setQuery] = useState("");
   const size = useBreakpointValue({ base: "sm", md: "md" });
   const [showBoxShadow, setBoxShadow] = useState(false);
   const boxShadowValue = {
@@ -34,6 +36,14 @@ const Search = ({ usernames }: { usernames: string[] }) => {
     "Medical Lawyer",
     "Legal Advices",
   ];
+
+  async function getLawyersName(i: string) {
+    const username = (await lawyersMutation.mutateAsync(i)).usernames;
+    setUsernames(username);
+  }
+  useEffect(() => {
+    getLawyersName(query);
+  }, [query]);
 
   const filteredPeople =
     query === ""
@@ -55,7 +65,7 @@ const Search = ({ usernames }: { usernames: string[] }) => {
       <FormControl onSubmit={() => router.push(`/search/${query}`)}>
         <InputGroup size={size}>
           <Input
-            width="40rem"
+            width={{ base: "13rem", md: "30rem", lg: "40rem" }}
             placeholder="Search your Lawyer"
             variant="flushed"
             onFocus={() => setBoxShadow(true)}
@@ -73,11 +83,11 @@ const Search = ({ usernames }: { usernames: string[] }) => {
         </InputGroup>
         {/* <Button type="submit">search</Button> */}
       </FormControl>
-      {showBoxShadow && (
+      {query !== "" && showBoxShadow && (
         <Box position="relative">
           <List
             spacing={3}
-            bg={{ base: "transparent", sm: "bg-surface" }}
+            bg="bg-surface"
             w="100%"
             position="absolute"
             boxShadow={showBoxShadow ? boxShadowValue : undefined}
@@ -85,27 +95,9 @@ const Search = ({ usernames }: { usernames: string[] }) => {
             pt={3}
             pb={3}
           >
-            {filteredPeople.length > 0 ? (
-              filteredPeople.map((value, index) => (
-                <ListItem
-                  onClick={() => router.push(`/search/${value}`)}
-                  _hover={{
-                    background: listHoverbg,
-                    cursor: "pointer",
-                  }}
-                  pr={3}
-                  pl={3}
-                  pb={2}
-                  pt={2}
-                  key={index}
-                >
-                  <ListIcon as={SearchIcon} color="green.500" />
-                  {value}
-                </ListItem>
-              ))
-            ) : (
+            {filteredPeople.map((value, index) => (
               <ListItem
-                onClick={() => router.push(`/search/${query}`)}
+                onClick={() => router.push(`/search/${value}`)}
                 _hover={{
                   background: listHoverbg,
                   cursor: "pointer",
@@ -114,11 +106,12 @@ const Search = ({ usernames }: { usernames: string[] }) => {
                 pl={3}
                 pb={2}
                 pt={2}
+                key={index}
               >
                 <ListIcon as={SearchIcon} color="green.500" />
-                {query ? query : "Search"}
+                {value}
               </ListItem>
-            )}
+            ))}
           </List>
         </Box>
       )}

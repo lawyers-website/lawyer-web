@@ -12,6 +12,7 @@ import {
 import * as React from "react";
 import MenuBar from "./menubar";
 import { useRouter } from "next/router";
+import Search from "../Searchbar";
 
 export default function App() {
   const router = useRouter();
@@ -34,11 +35,7 @@ export default function App() {
             </Heading>
             {isDesktop ? (
               <Flex justify="space-between" flex="1">
-                <ButtonGroup variant="link" spacing="8">
-                  {["Home", "About", "Laws", "Contact us"].map((item) => (
-                    <Button key={item}>{item}</Button>
-                  ))}
-                </ButtonGroup>
+                <Search />
                 <HStack spacing="3">
                   <Button
                     onClick={() => router.push("/signin")}

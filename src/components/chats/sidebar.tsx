@@ -26,7 +26,7 @@ import { GoPrimitiveDot } from "react-icons/go";
 const getUser = (users: string[], currentUser: any) =>
   users?.filter((user) => user !== currentUser);
 
-const Chat = ({ chat }: { chat: any }) => {
+const Chat = ({ chat, value }: { chat: any; value: string }) => {
   const router = useRouter();
   const { data: session } = useSession();
   const hoverBg = useColorModeValue("gray.100", "gray.700");
@@ -83,6 +83,7 @@ const Chat = ({ chat }: { chat: any }) => {
 };
 
 export default function SideBar() {
+  const [value, setValue] = useState("");
   const [searchActive, setSearchActive] = useState(false);
   const { data: session } = useSession();
   const [snapshot] = useCollection(collection(db, "chats"));
@@ -113,7 +114,12 @@ export default function SideBar() {
         >
           <ScaleFade initialScale={0} in={searchActive}>
             <InputGroup w="20rem">
-              <Input pr="4.5rem" placeholder="Search a username" />
+              <Input
+                pr="4.5rem"
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+                placeholder="Search a username"
+              />
               <InputRightElement>
                 <SearchIcon />
               </InputRightElement>
@@ -121,7 +127,10 @@ export default function SideBar() {
           </ScaleFade>
           <Button
             variant="link"
-            onClick={() => setSearchActive(false)}
+            onClick={() => {
+              setValue("");
+              setSearchActive(false);
+            }}
             cursor="pointer"
           >
             Close
@@ -143,14 +152,19 @@ export default function SideBar() {
       )}
 
       <Flex
-        overflowX="scroll"
+        overflowY="scroll"
         direction="column"
         sx={{ scrollbarWidth: "none" }}
       >
         {chats
           ?.filter((chat: any) => chat.users.includes(session?.user?.name))
+          ?.filter((chat: any) =>
+            getUser(chat.users, session?.user?.name)[0]
+              ?.toLowerCase()
+              .includes(value.toLowerCase())
+          )
           .map((chat: any) => (
-            <Chat chat={chat} key={chat.id} />
+            <Chat value={value} chat={chat} key={chat.id} />
           ))}
       </Flex>
     </Flex>

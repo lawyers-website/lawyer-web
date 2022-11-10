@@ -1,10 +1,10 @@
-import { z } from 'zod';
-import { createRouter } from './context';
-import bcrypt from 'bcryptjs';
-import { prisma } from 'src/server/db/client';
+import { z } from "zod";
+import { createRouter } from "./context";
+import bcrypt from "bcryptjs";
+import { prisma } from "src/server/db/client";
 
 export const openRouter = createRouter()
-  .mutation('signup', {
+  .mutation("signup", {
     input: z.object({
       name: z.string(),
       email: z.string().email(),
@@ -23,7 +23,7 @@ export const openRouter = createRouter()
         });
         return {
           success: true,
-          message: 'Account created',
+          message: "Account created",
         };
       } catch (error) {
         return {
@@ -33,7 +33,7 @@ export const openRouter = createRouter()
       }
     },
   })
-  .mutation('isEmailExists', {
+  .mutation("isEmailExists", {
     input: z.string().email(),
     async resolve({ input }) {
       const isEmailExists = Boolean(
@@ -47,5 +47,21 @@ export const openRouter = createRouter()
       return {
         isEmailExists,
       };
+    },
+  })
+  .mutation("getLawyers", {
+    input: z.string(),
+    async resolve({ input, ctx }) {
+      const lawyers = await ctx.prisma.lawyerDetails.findMany({
+        take: 6,
+        where: {
+          fullName: {
+            contains: input,
+            mode: "insensitive",
+          },
+        },
+      });
+      const usernames = lawyers?.map((lawyer) => lawyer.fullName);
+      return { usernames };
     },
   });

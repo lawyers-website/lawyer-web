@@ -19,7 +19,6 @@ import PasswordField from "src/components/FormikCompo/PasswordField";
 import { useRouter } from "next/router";
 import { trpc } from "../../utils/trpc";
 import { getSession } from "next-auth/react";
-import { useEffect } from "react";
 
 const FormSchema = z
   .object({
@@ -52,7 +51,10 @@ export default function App() {
           email: "Email Address Already exists ",
         },
       };
-    else signupMutation.mutateAsync(values);
+    else {
+      signupMutation.mutateAsync(values);
+      router.push("/signin");
+    }
   };
 
   return (
@@ -93,7 +95,7 @@ export default function App() {
                 if (res && res.error) {
                   setErrors(res.error);
                 }
-                router.push("/signin");
+                // router.push("/signin");
                 setSubmitting(false);
               });
             }}

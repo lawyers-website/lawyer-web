@@ -29,6 +29,7 @@ const MyApp: AppType = ({
     setLoading(false);
     NProgress.done();
   });
+  NProgress.configure({ showSpinner: false });
   return (
     <SessionProvider session={session}>
       <ChakraProvider theme={extendTheme(theme)}>

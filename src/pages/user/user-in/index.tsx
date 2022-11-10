@@ -1,8 +1,8 @@
 import User from "../../../components/User";
 import { prisma } from "src/server/db/client";
 
-export default function userIn({ usernames }: { usernames: string[] }) {
-  return <User usernames={usernames} />;
+export default function userIn() {
+  return <User />;
 }
 
 export async function getServerSideProps(ctx: any) {

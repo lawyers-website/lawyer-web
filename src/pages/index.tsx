@@ -1,3 +1,4 @@
+import Navbar from "@/components/User/navbar";
 import type { GetServerSidePropsContext } from "next";
 import { getSession } from "next-auth/react";
 import { Home, Opening, Header, Jumbotron, Footer } from "../components";
@@ -5,7 +6,7 @@ import { Home, Opening, Header, Jumbotron, Footer } from "../components";
 export default function Index() {
   return (
     <>
-      <Home />
+      <Navbar />
       <Opening />
       <Header />
       <Jumbotron />

@@ -38,23 +38,27 @@ export default function LawyerDetail({
   const boxShadow = useColorModeValue("md", "md-dark");
   const [snapshot] = useCollection(collection(db, "chats"));
   const handleClick = async () => {
-    const chats: any = snapshot?.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-    const chat = chats?.filter(
-      (data: any) =>
-        data.users?.includes(session?.user?.name) &&
-        data.users?.includes(username)
-    );
-    if (chat.length === 0) {
-      const c = await addDoc(collection(db, "chats"), {
-        users: [username, session?.user?.name],
-      });
-      router.push(`/inbox/${c.id}`);
-    }
+    if (session?.user) {
+      const chats: any = snapshot?.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      const chat = chats?.filter(
+        (data: any) =>
+          data.users?.includes(session?.user?.name) &&
+          data.users?.includes(username)
+      );
+      if (chat.length === 0) {
+        const c = await addDoc(collection(db, "chats"), {
+          users: [username, session?.user?.name],
+        });
+        router.push(`/inbox/${c.id}`);
+      }
 
-    chat.map((c: any) => router.push(`/inbox/${c.id}`));
+      chat.map((c: any) => router.push(`/inbox/${c.id}`));
+    } else {
+      router.push("/signin");
+    }
   };
 
   return (

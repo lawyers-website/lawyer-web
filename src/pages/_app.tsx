@@ -12,9 +12,11 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { theme } from "../../pro-theme";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 import { useState } from "react";
 import Head from "next/head";
+import Navbar from "@/components/NavBar/navbar";
+import LawyerNav from "@/components/Lawyer/navbar";
 
 const MyApp: AppType = ({
   Component,
@@ -30,6 +32,9 @@ const MyApp: AppType = ({
     NProgress.done();
   });
   NProgress.configure({ showSpinner: false });
+
+  const { pathname } = useRouter();
+
   return (
     <SessionProvider session={session}>
       <ChakraProvider theme={extendTheme(theme)}>
@@ -55,11 +60,18 @@ const MyApp: AppType = ({
               speed="0.65s"
               emptyColor="gray.200"
               color="blue.500"
-              size="xl"
             />
           </Box>
         ) : (
-          <Component {...pageProps} />
+          <>
+            {pathname === "/inbox" && <LawyerNav />}
+            {!(
+              pathname === "/signup" ||
+              pathname === "/signin" ||
+              pathname === "/inbox"
+            ) && <Navbar />}
+            <Component {...pageProps} />
+          </>
         )}
       </ChakraProvider>
     </SessionProvider>

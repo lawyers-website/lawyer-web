@@ -1,12 +1,10 @@
 import SideBar from "@/components/chats/sidebar";
-import Navbar from "@/components/Lawyer/navbar";
 import { AttachmentIcon } from "@chakra-ui/icons";
 import { Flex, HStack, Text, useBreakpointValue } from "@chakra-ui/react";
 
 export default function Sidebar() {
   return (
     <>
-      <Navbar />
       {useBreakpointValue({
         base: <SideBar />,
         md: (

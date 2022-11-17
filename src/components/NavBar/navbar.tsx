@@ -18,6 +18,14 @@ import {
   InputGroup,
   Input,
   Icon,
+  IconButton,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
 } from "@chakra-ui/react";
 import * as React from "react";
 import { MdAccountCircle, MdOutlineMarkEmailUnread } from "react-icons/md";
@@ -27,11 +35,15 @@ import { HiOutlineMail } from "react-icons/hi";
 import { signOut, useSession } from "next-auth/react";
 import Search from "../Searchbar";
 import { useRouter } from "next/router";
+import { SearchIcon } from "@chakra-ui/icons";
+import { useState } from "react";
 
-const UserIn: any = () => {
+const UserIn = ({ onClickSearchBtn }: Props) => {
   const router = useRouter();
   const size = useBreakpointValue({ base: "sm", md: "md" });
   const isDesktop = useBreakpointValue({ base: false, md: false, lg: true });
+  const [isSearchOpen, setSearchOpen] = React.useState(false);
+
   return isDesktop ? (
     <Flex justify="space-between" flex="1">
       <Search />
@@ -82,7 +94,11 @@ const UserIn: any = () => {
     </Flex>
   ) : (
     <Flex justify="space-between" flex="1">
-      <Search />
+      <IconButton
+        aria-label="Search btn"
+        icon={<SearchIcon />}
+        onClick={() => onClickSearchBtn()}
+      />
       <Menu>
         <MenuButton>
           <MdAccountCircle size={33} />
@@ -115,9 +131,14 @@ const UserIn: any = () => {
   );
 };
 
-const UserNotIn = () => {
+interface Props {
+  onClickSearchBtn: () => void;
+}
+
+const UserNotIn = ({ onClickSearchBtn }: Props) => {
   const router = useRouter();
   const isDesktop = useBreakpointValue({ base: false, md: false, lg: true });
+
   return isDesktop ? (
     <Flex justify="space-between" flex="1">
       <Search />
@@ -132,7 +153,11 @@ const UserNotIn = () => {
     </Flex>
   ) : (
     <Flex justify="space-between" flex="1">
-      <Search />
+      <IconButton
+        aria-label="Search btn"
+        icon={<SearchIcon />}
+        onClick={() => onClickSearchBtn()}
+      />
       <Button onClick={() => router.push("/signup")} variant="primary">
         Sign up
       </Button>
@@ -142,26 +167,43 @@ const UserNotIn = () => {
 
 export default function Navbar() {
   const { data: session } = useSession();
+  const [isSearchOpen, setSearchOpen] = useState(false);
+
+  const onClickSearchBtn = () => setSearchOpen((val) => !val);
+  const { pathname } = useRouter();
+
   return (
-    <Box m="0" as="section" pb={{ base: "7", md: "12" }}>
-      <Box
-        as="nav"
-        bg="bg-surface"
-        boxShadow={useColorModeValue("sm", "sm-dark")}
-      >
-        <Container py={{ base: "4", lg: "5" }}>
-          <HStack spacing={{ base: 3, md: 10 }} justify="space-between">
-            <Heading
-              marginLeft={{ base: 0, md: "3" }}
-              size={useBreakpointValue({ base: "xs", md: "sm" })}
-            >
-              Lawyers
-            </Heading>
-            {/* <Search /> */}
-            {session?.user ? <UserIn /> : <UserNotIn />}
-          </HStack>
-        </Container>
+    <>
+      <Box m="0" as="section" pb={{ base: "7", md: "12" }}>
+        <Box
+          as="nav"
+          bg="bg-surface"
+          boxShadow={useColorModeValue("sm", "sm-dark")}
+        >
+          <Container py={{ base: "4", lg: "5" }}>
+            <HStack spacing={{ base: 3, md: 10 }} justify="space-between">
+              <Heading
+                marginLeft={{ base: 0, md: "3" }}
+                size={useBreakpointValue({ base: "xs", md: "sm" })}
+              >
+                Lawyers
+              </Heading>
+
+              {session?.user ? (
+                <UserIn onClickSearchBtn={onClickSearchBtn} />
+              ) : (
+                <UserNotIn onClickSearchBtn={onClickSearchBtn} />
+              )}
+            </HStack>
+          </Container>
+        </Box>
       </Box>
-    </Box>
+      <Modal isOpen={isSearchOpen} onClose={() => setSearchOpen(false)}>
+        <ModalOverlay />
+        <ModalContent>
+          <Search />
+        </ModalContent>
+      </Modal>
+    </>
   );
 }

@@ -1,5 +1,4 @@
 import Filter from "./filter";
-import Navbar from "../User/navbar";
 import Footer from "@/components/home/footer";
 import { useState } from "react";
 import {
@@ -75,7 +74,6 @@ export default function SearchResult({
 
   return (
     <>
-      {session?.user ? <Navbar /> : <Home />}
       <Stack
         direction={{ base: "column", lg: "row" }}
         height="100%"

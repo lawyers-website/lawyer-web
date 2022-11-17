@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  ButtonGroup,
   Container,
   Flex,
   Heading,
@@ -14,22 +13,13 @@ import {
   MenuItem,
   MenuGroup,
   MenuDivider,
-  InputRightElement,
-  InputGroup,
-  Input,
-  Icon,
   IconButton,
   Modal,
-  ModalBody,
-  ModalCloseButton,
   ModalContent,
-  ModalFooter,
-  ModalHeader,
   ModalOverlay,
 } from "@chakra-ui/react";
 import * as React from "react";
-import { MdAccountCircle, MdOutlineMarkEmailUnread } from "react-icons/md";
-import { IoSearch } from "react-icons/io5";
+import { MdAccountCircle } from "react-icons/md";
 import { FiSettings } from "react-icons/fi";
 import { HiOutlineMail } from "react-icons/hi";
 import { signOut, useSession } from "next-auth/react";
@@ -40,9 +30,7 @@ import { useState } from "react";
 
 const UserIn = ({ onClickSearchBtn }: Props) => {
   const router = useRouter();
-  const size = useBreakpointValue({ base: "sm", md: "md" });
   const isDesktop = useBreakpointValue({ base: false, md: false, lg: true });
-  const [isSearchOpen, setSearchOpen] = React.useState(false);
 
   return isDesktop ? (
     <Flex justify="space-between" flex="1">

@@ -20,7 +20,7 @@ const Search = () => {
   const lawyersMutation = trpc.useMutation("util.getLawyers");
   const router = useRouter();
   const [query, setQuery] = useState("");
-  const size = useBreakpointValue({ base: "sm", md: "md" });
+  const size = useBreakpointValue({ base: "md", md: "md" }, { ssr: false });
   const [showBoxShadow, setBoxShadow] = useState(false);
   const boxShadowValue = {
     base: "none",
@@ -61,11 +61,11 @@ const Search = () => {
       boxShadow={showBoxShadow ? boxShadowValue : undefined}
       borderTopRadius={10}
       zIndex={10}
+      width="100%"
     >
       <FormControl onSubmit={() => router.push(`/search/${query}`)}>
-        <InputGroup size={size}>
+        <InputGroup size={size} w="100%">
           <Input
-            width={{ base: "13rem", md: "30rem", lg: "40rem" }}
             placeholder="Search your Lawyer"
             variant="flushed"
             onFocus={() => setBoxShadow(true)}

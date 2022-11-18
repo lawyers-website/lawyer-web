@@ -1,7 +1,7 @@
 {
   "prettier.jsxSingleQuote": false,
   "prettier.singleQuote": false,
-  "eslint.alwaysShowStatus": true,
+  "eslint.alwaysShowStatus": false,
   "eslint.onIgnoredFiles": "warn",
   "eslint.packageManager": "yarn"
 }

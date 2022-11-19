@@ -41,7 +41,7 @@ export default function Navbar({ categories, setCategories }: props) {
   //     "faq":"FAQ",
       
   //   }
-  }
+  
   return (
     <Box m="0" as="section" pb={{ base: "7", md: "12" }}>
       <Box

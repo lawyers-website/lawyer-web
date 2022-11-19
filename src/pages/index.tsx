@@ -10,6 +10,7 @@ export default function Index() {
       <Header />
       <Jumbotron />
       <Footer />
+
     </>
   );
 }

@@ -8,6 +8,7 @@ import {
   HStack,
   useBreakpointValue,
   useColorModeValue,
+  Select
 } from "@chakra-ui/react";
 import * as React from "react";
 import MenuBar from "./menubar";

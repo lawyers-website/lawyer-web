@@ -17,6 +17,7 @@ import { useState } from "react";
 import Head from "next/head";
 import Navbar from "@/components/NavBar/navbar";
 import LawyerNav from "@/components/Lawyer/navbar";
+import LangContext from "@/langContext";
 
 const MyApp: AppType = ({
   Component,
@@ -38,6 +39,7 @@ const MyApp: AppType = ({
   return (
     <SessionProvider session={session}>
       <ChakraProvider theme={extendTheme(theme)}>
+        <LangContext>
         <Head>
           <link
             rel="stylesheet"
@@ -73,6 +75,7 @@ const MyApp: AppType = ({
             <Component {...pageProps} />
           </>
         )}
+        </LangContext>
       </ChakraProvider>
     </SessionProvider>
   );

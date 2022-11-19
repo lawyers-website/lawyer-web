@@ -33,6 +33,15 @@ export default function Navbar({ categories, setCategories }: props) {
   const isDesktop = useBreakpointValue({ base: false, md: false, lg: true });
   const color = useColorModeValue("gray.700", "RGBA(0, 0, 0, 0.48)");
   const color1 = useColorModeValue("gray.700", "gray.300");
+  // const dat={
+  //   "en":{
+  //     "my-acc":"My Account",
+  //     "payments":"Payments ",
+  //     "docs":"Docs",
+  //     "faq":"FAQ",
+      
+  //   }
+  }
   return (
     <Box m="0" as="section" pb={{ base: "7", md: "12" }}>
       <Box

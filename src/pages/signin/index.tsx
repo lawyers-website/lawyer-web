@@ -20,12 +20,37 @@ import OAuthButtonGroup from "src/components/Oauth";
 import PasswordField from "src/components/FormikCompo/PasswordField";
 import { getSession, signIn } from "next-auth/react";
 import { useState } from "react";
-
+import {useContext} from 'react'
+import { language } from "@/langContext";
 export const AuthError = {
+
   WRONG_PASSWORD: 1,
   EMAIL_DOESNT_EXIST: 2,
   NO_PASSWORD: 3,
 } as const;
+
+const da={
+  "en":{
+    "email":"Email Address doesn't exsits",
+    "pass":"Please Enter the password",
+    "iPass":"Email or Password are incorrect",
+  },
+  "it":{
+    "email":"L'indirizzo e-mail non esiste",
+    "pass":"Inserisci la password",
+    "iPass":"Email o password non sono corrette",
+  },
+  "fre":{
+    "email":"L'adresse e-mail n'existe pas",
+    "pass":"S'il vous plaît entrer le mot de passe",
+    "iPass":"L'adresse email ou le mot de passe est incorrect",
+  },
+  "ger":{
+    "email":"E-Mail-Adresse existiert nicht",
+    "pass":"Bitte geben Sie das Passwort ein",
+    "iPass":"E-Mail oder Passwort sind falsch",
+  },
+}
 
 const setFormikErrors = (
   error: string,
@@ -39,7 +64,7 @@ const setFormikErrors = (
   switch (parseInt(error)) {
     case AuthError.EMAIL_DOESNT_EXIST:
       setErrors({
-        email: "Email Address doesn't exsits",
+        email: "Please Enter the password",
       });
       break;
     case AuthError.NO_PASSWORD:

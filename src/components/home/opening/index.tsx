@@ -2,9 +2,28 @@ import { Box, Heading, useBreakpointValue, useColorModeValue, Flex } from '@chak
 import { useState } from 'react';
 import Forms from '../../Forms';
 import ProgressBar from '../../Progressbar';
+import {useContext} from 'react'
+import { language } from "@/langContext";
+
+const da={
+  "en":{
+    "title":'Find the best lawyer for you',
+  },
+  "it":{
+    "title":'Trova il miglior avvocato per te',
+  },
+  "fre":{
+    "title":"Trouvez le meilleur avocat pour vous",
+  },
+  "ger":{
+    "title":"Finden Sie den besten Anwalt für Sie",
+  }
+}
 
 export default function Opening() {
   const [position, setPosition] = useState(0);
+  const selL=useContext(language)
+  const sl=selL?.lang! as keyof typeof da
   return (
     <>
       <Heading
@@ -15,7 +34,7 @@ export default function Opening() {
         textAlign='center'
         size={useBreakpointValue({ base: 'xs', md: 'sm' })}
       >
-        Find the best lawyer for you
+        {da[sl]['title']}
       </Heading>
       <Box
         boxSizing='border-box'

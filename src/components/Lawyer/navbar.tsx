@@ -50,9 +50,7 @@ export default function Navbar() {
                   <Button onClick={() => router.push("/inbox")}>
                     Messages
                   </Button>
-                  <Button onClick={() => router.push("/user/orders")}>
-                    Orders
-                  </Button>
+                  <Button onClick={() => router.push("/orders")}>Orders</Button>
                   <Button>Bookmarks</Button>
                   <Button>Transcations</Button>
                 </ButtonGroup>

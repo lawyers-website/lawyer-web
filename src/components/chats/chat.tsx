@@ -29,13 +29,13 @@ const Topbar = ({ name }: { name: any }) => {
     <Flex
       alignItems="center"
       borderBottom="1px solid"
-      borderColor="gray.200"
+      borderColor={useColorModeValue("gray.200", "gray.500")}
       pl="2rem"
       h="60px"
       w="100%"
     >
-      <Avatar src="" />
-      <Text fontWeight="700" fontSize="1.5rem" ml={5}>
+      <Avatar name={name[0]} size="sm" src="" />
+      <Text fontWeight="600" fontSize="1.3rem" ml={2}>
         {name}
       </Text>
     </Flex>
@@ -110,8 +110,6 @@ export default function Chat() {
   const bg2 = useColorModeValue("green.100", "green.500");
   const getUser = (users: string[], currentUser: any) =>
     users?.filter((user) => user !== currentUser);
-
-  console.log(data);
 
   return !data ? (
     <Flex

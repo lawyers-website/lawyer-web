@@ -1,6 +1,5 @@
 import Chat from "@/components/chats/chat";
 import SideBar from "@/components/chats/sidebar";
-import Navbar from "@/components/Lawyer/navbar";
 import { HStack, useBreakpointValue } from "@chakra-ui/react";
 import {
   collection,
@@ -37,7 +36,6 @@ export default function Sidebar() {
   }
   return (
     <>
-      <Navbar />
       {useBreakpointValue({
         base: <Chat />,
         md: (

@@ -53,7 +53,11 @@ const Chat = ({ chat, value }: { chat: any; value: string }) => {
       onClick={() => router.push(`/inbox/${chat.id}`)}
       position="relative"
     >
-      <Avatar marginEnd="1rem" src="" />
+      <Avatar
+        name={getUser(chat.users, session?.user?.name)[0]}
+        marginEnd="1rem"
+        src=""
+      />
       <VStack spacing={0} alignItems="flex-start">
         <Box display="flex" alignItems="center" justifyContent="space-between">
           <Text fontWeight="700" fontSize={20} mr="5px">
@@ -87,6 +91,7 @@ export default function SideBar() {
   const [searchActive, setSearchActive] = useState(false);
   const { data: session } = useSession();
   const [snapshot] = useCollection(collection(db, "chats"));
+  const bg = useColorModeValue("gray.200", "gray.500");
   const chats: any = snapshot?.docs.map((doc) => ({
     id: doc.id,
     ...doc.data(),
@@ -98,7 +103,7 @@ export default function SideBar() {
       w={{ base: "100%", md: "40%", lg: "30%" }}
       h="85vh"
       borderEnd="1px solid"
-      borderColor="gray.200"
+      borderColor={bg}
       direction="column"
       bg="bg-surface"
     >
@@ -108,7 +113,7 @@ export default function SideBar() {
           w="100%"
           alignItems="center"
           borderBottom="1px solid"
-          borderColor="gray.200"
+          borderColor={bg}
           justify="space-between"
           px="1rem"
         >
@@ -142,7 +147,7 @@ export default function SideBar() {
           w="100%"
           alignItems="center"
           borderBottom="1px solid"
-          borderColor="gray.200"
+          borderColor={bg}
           justify="space-between"
           px="1rem"
         >

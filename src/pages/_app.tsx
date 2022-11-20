@@ -40,41 +40,46 @@ const MyApp: AppType = ({
     <SessionProvider session={session}>
       <ChakraProvider theme={extendTheme(theme)}>
         <LangContext>
-        <Head>
-          <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css"
-            integrity="sha512-42kB9yDlYiCEfx2xVwq0q7hT4uf26FUgSIZBK8uiaEnTdShXjwr8Ip1V4xGJMg3mHkUt9nNuTDxunHF0/EgxLQ=="
-            crossOrigin="anonymous"
-            referrerPolicy="no-referrer"
-          />
-        </Head>
-        {loading ? (
-          <Box
-            width="100%"
-            minHeight="100vh"
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-          >
-            <Spinner
-              thickness="4px"
-              speed="0.65s"
-              emptyColor="gray.200"
-              color="blue.500"
+          <Head>
+            <link
+              rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css"
+              integrity="sha512-42kB9yDlYiCEfx2xVwq0q7hT4uf26FUgSIZBK8uiaEnTdShXjwr8Ip1V4xGJMg3mHkUt9nNuTDxunHF0/EgxLQ=="
+              crossOrigin="anonymous"
+              referrerPolicy="no-referrer"
             />
-          </Box>
-        ) : (
-          <>
-            {pathname === "/inbox" && <LawyerNav />}
-            {!(
-              pathname === "/signup" ||
-              pathname === "/signin" ||
-              pathname === "/inbox"
-            ) && <Navbar />}
-            <Component {...pageProps} />
-          </>
-        )}
+          </Head>
+          {loading ? (
+            <Box
+              width="100%"
+              minHeight="100vh"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <Spinner
+                thickness="4px"
+                speed="0.65s"
+                emptyColor="gray.200"
+                color="blue.500"
+              />
+            </Box>
+          ) : (
+            <>
+              {(pathname.includes("/inbox") || pathname === "/orders") && (
+                <LawyerNav />
+              )}
+              {!(
+                pathname === "/signup" ||
+                pathname === "/signin" ||
+                pathname === "/inbox" ||
+                pathname === "/orders" ||
+                pathname.includes("/inbox/") ||
+                pathname === "/admin"
+              ) && <Navbar />}
+              <Component {...pageProps} />
+            </>
+          )}
         </LangContext>
       </ChakraProvider>
     </SessionProvider>

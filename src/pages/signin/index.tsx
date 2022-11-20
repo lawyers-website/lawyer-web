@@ -31,7 +31,7 @@ export const AuthError = {
 
 const da={
   "en":{
-    "email":"Email Address doesn't exsits",
+    "email":"Email Address doesn't exists",
     "pass":"Please Enter the password",
     "iPass":"Email or Password are incorrect",
   },
@@ -64,7 +64,7 @@ const setFormikErrors = (
   switch (parseInt(error)) {
     case AuthError.EMAIL_DOESNT_EXIST:
       setErrors({
-        email: "Please Enter the password",
+        email: "Email Address doesn't exists",
       });
       break;
     case AuthError.NO_PASSWORD:

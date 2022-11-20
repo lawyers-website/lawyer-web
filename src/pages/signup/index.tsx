@@ -19,7 +19,8 @@ import PasswordField from "src/components/FormikCompo/PasswordField";
 import { useRouter } from "next/router";
 import { trpc } from "../../utils/trpc";
 import { getSession } from "next-auth/react";
-
+import {useContext} from 'react'
+import { language } from "@/langContext";
 const FormSchema = z
   .object({
     name: z.string(),
@@ -56,6 +57,7 @@ export default function App() {
       router.push("/signin");
     }
   };
+  
 
   return (
     <Container

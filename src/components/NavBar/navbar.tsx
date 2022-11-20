@@ -17,6 +17,7 @@ import {
   Modal,
   ModalContent,
   ModalOverlay,
+  Select,
 } from "@chakra-ui/react";
 import * as React from "react";
 import { MdAccountCircle } from "react-icons/md";
@@ -26,7 +27,8 @@ import { signOut, useSession } from "next-auth/react";
 import Search from "../Searchbar";
 import { useRouter } from "next/router";
 import { SearchIcon } from "@chakra-ui/icons";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { language } from "@/langContext";
 
 const UserIn = ({ onClickSearchBtn }: Props) => {
   const router = useRouter();
@@ -159,7 +161,8 @@ export default function Navbar() {
 
   const onClickSearchBtn = () => setSearchOpen((val) => !val);
   const { pathname } = useRouter();
-
+  const Lang = useContext(language);
+ 
   return (
     <>
       <Box m="0" as="section" pb={{ base: "7", md: "12" }}>
@@ -182,6 +185,12 @@ export default function Navbar() {
               ) : (
                 <UserNotIn onClickSearchBtn={onClickSearchBtn} />
               )}
+              <Select  value={Lang?.lang} onChange={(e)=>Lang?.setLang(e.target.value)} width="25">
+                <option value="en">English</option>
+                <option value="it">Italian</option>
+                <option value="fre">French</option>
+                <option value="ger">German</option>
+              </Select>
             </HStack>
           </Container>
         </Box>

@@ -11,10 +11,39 @@ import {
   Divider,
   useMediaQuery,
 } from '@chakra-ui/react';
+import React from 'react'
+import {useContext} from 'react'
+import { language } from "@/langContext";
+
+
+const da={
+  "en" :{
+      "story":"Our Story",
+      "Title":"Find Your Perfect Lawyer",
+      "para":"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore",
+   },
+   "it":{
+      "story":"la nostra storia",
+      "Title":"Trova il tuo avvocato perfetto",
+      "para":"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore",
+   },
+   "ger":{
+      "story":"unsere Geschichte",
+      "Title":"Finden Sie Ihren perfekten Anwalt",
+      "para":"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore",
+   },
+   "fre":{
+      "story":"notre histoire",
+      "Title":"Trouvez votre avocat idéal",
+      "para":"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore",
+   },
+
+}
 
 export default function Header() {
   const [isDesktop] = useMediaQuery('( min-width: 1000px)');
-
+  const selL=useContext(language)
+  const sl=selL?.lang! as keyof typeof da;
   return (
     <>
       <Container maxW='5xl' py={12}>
@@ -30,12 +59,12 @@ export default function Header() {
               alignSelf='flex-start'
               rounded='md'
             >
-              Our Story
+              {/* Our Story */}
+              {da[sl]['story']}
             </Text>
-            <Heading>Find Your Perfect Lawyer</Heading>
+            <Heading>{da[sl]['Title']}</Heading>
             <Text color='gray.500' fontSize='lg'>
-              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-              invidunt ut labore
+              {da[sl]['para']}
             </Text>
             <Stack
               spacing={4}

@@ -39,27 +39,28 @@ export default function Start({ setPosition }: props) {
     <>
       <Text margin='5' fontSize='2xl' textAlign='center'>
         {da[sl]['box_title']}
+    
       </Text>
-      <SimpleGrid spacing='auto' columns={{ sm: 1, md: 2 }}>
+      <SimpleGrid spacing="auto" columns={{ sm: 1, md: 2 }}>
         <Box
           onClick={() => setPosition(1)}
-          margin={{ sm: 'auto', lg: '5' }}
-          py={{ base: '0', sm: '8' }}
-          px={{ base: '4', sm: '10' }}
-          bg={useBreakpointValue({ base: 'transparent', sm: 'bg-surface' })}
+          margin={{ sm: "auto", lg: "5" }}
+          py={{ base: "0", sm: "8" }}
+          px={{ base: "4", sm: "10" }}
+          bg={useBreakpointValue({ base: "transparent", sm: "bg-surface" })}
           _hover={{
-            boxShadow: 'dark-lg',
-            cursor: 'pointer',
+            boxShadow: "dark-lg",
+            cursor: "pointer",
           }}
-          borderRadius={{ base: '2xl', sm: '2xl' }}
+          borderRadius={{ base: "2xl", sm: "2xl" }}
         >
-          <Flex align='center' direction='column'>
+          <Flex align="center" direction="column">
             <FaHome size={70} />
             <Heading
-              fontWeight='bold'
-              margin='4'
-              textAlign='center'
-              size={useBreakpointValue({ base: 'xs', md: 'xs' })}
+              fontWeight="bold"
+              margin="4"
+              textAlign="center"
+              size={useBreakpointValue({ base: "xs", md: "xs" })}
             >
               {/* PRIVATE */}
               {da[sl]['pvt']}
@@ -69,25 +70,24 @@ export default function Start({ setPosition }: props) {
 
         <Box
           onClick={() => setPosition(1)}
-          margin={{ sm: 'auto', lg: '5' }}
-          py={{ base: '0', sm: '8' }}
-          px={{ base: '4', sm: '10' }}
-          bg={useBreakpointValue({ base: 'transparent', sm: 'bg-surface' })}
-          transition='boxShadow 2s'
-          // boxShadow={{ base: "none", sm: useColorModeValue("md", "md-dark") }}
+          margin={{ sm: "auto", lg: "5" }}
+          py={{ base: "0", sm: "8" }}
+          px={{ base: "4", sm: "10" }}
+          bg={useBreakpointValue({ base: "transparent", sm: "bg-surface" })}
+          transition="boxShadow 2s"
           _hover={{
-            boxShadow: 'dark-lg',
-            cursor: 'pointer',
+            boxShadow: "dark-lg",
+            cursor: "pointer",
           }}
-          borderRadius={{ base: '2xl', sm: '2xl' }}
+          borderRadius={{ base: "2xl", sm: "2xl" }}
         >
-          <Flex align='center' direction='column'>
+          <Flex align="center" direction="column">
             <BsBuilding size={70} />
             <Heading
-              fontWeight='bold'
-              margin='4'
-              textAlign='center'
-              size={useBreakpointValue({ base: 'xs', md: 'xs' })}
+              fontWeight="bold"
+              margin="4"
+              textAlign="center"
+              size={useBreakpointValue({ base: "xs", md: "xs" })}
             >
             {da[sl]['business']}
             </Heading>

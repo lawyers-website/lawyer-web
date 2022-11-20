@@ -21,7 +21,6 @@ import {
 } from "@chakra-ui/react";
 import * as React from "react";
 import { MdAccountCircle } from "react-icons/md";
-import { FiSettings } from "react-icons/fi";
 import { HiOutlineMail } from "react-icons/hi";
 import { signOut, useSession } from "next-auth/react";
 import Search from "../Searchbar";
@@ -41,12 +40,6 @@ const UserIn = ({ onClickSearchBtn }: Props) => {
         <HiOutlineMail
           onClick={() => router.push("/inbox")}
           size={25}
-          style={{
-            cursor: "pointer",
-          }}
-        />
-        <FiSettings
-          size={22}
           style={{
             cursor: "pointer",
           }}
@@ -162,7 +155,7 @@ export default function Navbar() {
   const onClickSearchBtn = () => setSearchOpen((val) => !val);
   const { pathname } = useRouter();
   const Lang = useContext(language);
- 
+
   return (
     <>
       <Box m="0" as="section" pb={{ base: "7", md: "12" }}>
@@ -185,7 +178,11 @@ export default function Navbar() {
               ) : (
                 <UserNotIn onClickSearchBtn={onClickSearchBtn} />
               )}
-              <Select  value={Lang?.lang} onChange={(e)=>Lang?.setLang(e.target.value)} width="25">
+              <Select
+                value={Lang?.lang}
+                onChange={(e) => Lang?.setLang(e.target.value)}
+                width="25"
+              >
                 <option value="en">English</option>
                 <option value="it">Italian</option>
                 <option value="fre">French</option>

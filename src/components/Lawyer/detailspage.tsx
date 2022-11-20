@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  ButtonGroup,
   Divider,
   Grid,
   Heading,
@@ -20,7 +21,6 @@ import { useSession } from "next-auth/react";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "firebaseconfig";
 import { useCollection } from "react-firebase-hooks/firestore";
-import { useState } from "react";
 
 export default function LawyerDetail({
   lawyer,
@@ -102,9 +102,19 @@ export default function LawyerDetail({
                     {lawyer.state} ,{lawyer.country}
                   </Text>
                 </HStack>
-                <Button variant="outline" onClick={(e) => handleClick()}>
-                  Message
-                </Button>
+                <ButtonGroup>
+                  <Button variant="outline" onClick={(e) => handleClick()}>
+                    Message
+                  </Button>
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      router.push(`/orders/new/${lawyer.id}`);
+                    }}
+                  >
+                    Hire Me
+                  </Button>
+                </ButtonGroup>
               </VStack>
             </Box>
             <Box>

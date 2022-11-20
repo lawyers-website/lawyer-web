@@ -34,33 +34,39 @@ model Session {
 }
 
 model Reviews {
-    id          String @id @default(cuid())   
-    user        LawyerDetails   @relation(fields: [lawyerId], references: [lawyerId], onDelete: Cascade)
-    lawyerId    String
-    userId      String
-    userName    String?
-    rating      Int
-    review      String
-    createdAt   DateTime    @default(now())
+    id        String        @id @default(cuid())
+    user      LawyerDetails @relation(fields: [lawyerId], references: [lawyerId], onDelete: Cascade)
+    lawyerId  String
+    userId    String
+    userName  String?
+    rating    Int
+    review    String
+    createdAt DateTime      @default(now())
+}
+
+model Order {
+    id       String @id @default(cuid())
+    lawyerId String
 }
 
 model LawyerDetails {
-    id          String @id @default(cuid())
-    lawyerId    String @unique
-    lawyer      User   @relation(fields: [lawyerId], references: [id], onDelete: Cascade)
-    institution String
-    course      String
-    fullName    String
-    experience  Int
-    services    String
-    image       String?
-    expertise   String
-    state       String
-    country     String
-    description String
-    rating      Int?   @default(0)
-    reviews     Reviews[]
-    numofreviews Int?  @default(0)
+    id           String    @id @default(cuid())
+    lawyerId     String    @unique
+    lawyer       User      @relation(fields: [lawyerId], references: [id], onDelete: Cascade)
+    institution  String
+    course       String
+    fullName     String
+    experience   Int
+    services     String
+    image        String?
+    expertise    String
+    state        String
+    country      String
+    description  String
+    price        Int       @default(0)
+    rating       Int?      @default(0)
+    reviews      Reviews[]
+    numofreviews Int?      @default(0)
 }
 
 model User {

@@ -6,6 +6,8 @@ import { IoPeopleSharp, IoHomeSharp } from 'react-icons/io5';
 import { TbReceiptTax } from 'react-icons/tb';
 import { GrUserWorker } from 'react-icons/gr';
 import { RiGovernmentFill } from 'react-icons/ri';
+import {useContext} from 'react'
+import { language } from "@/langContext";
 
 interface props {
   setPosition: React.Dispatch<React.SetStateAction<number>>;
@@ -16,7 +18,14 @@ interface Props {
   setPosition: React.Dispatch<React.SetStateAction<number>>;
 }
 
+const da={
+  "en":"How can we help you?",
+  "it":"Come possiamo aiutarti?",
+  "fre":"Comment pouvons-nous vous aider?",
+  "ger":"Wie können wir Ihnen helfen?",
+}
 function Extrabox({ item, setPosition }: Props) {
+
   return (
     <Box
       key={item.title}
@@ -67,11 +76,12 @@ export default function SecondStep({ setPosition }: props) {
     { title: 'GOVERNMENT ADMINISTRATION' },
     { title: 'OTHERS' },
   ];
-
+  const selL=useContext(language)
+  const sl=selL?.lang! as keyof typeof da;
   return (
     <>
       <Text margin='5' fontSize='2xl' textAlign='center'>
-        How can we help you?
+        {da[sl]}
       </Text>
       <SimpleGrid spacing='auto' columns={{ sm: 1, md: 4 }}>
         {items.map((item, index) => (

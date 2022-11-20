@@ -14,6 +14,8 @@ import { SearchIcon } from "@chakra-ui/icons";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { trpc } from "@/utils/trpc";
+import {useContext} from 'react'
+import { language } from "@/langContext";
 
 const Search = () => {
   const [usernames, setUsernames] = useState<string[]>([]);
@@ -37,6 +39,12 @@ const Search = () => {
     "Legal Advices",
   ];
 
+  const da={
+    "en":"Search your Lawyer",
+    "it":"Cerca il tuo avvocato",
+    "fre":"Fouillez votre avocat",
+    "ger":"Suche deinen Anwalt",
+  }
   async function getLawyersName(i: string) {
     const username = (await lawyersMutation.mutateAsync(i)).usernames;
     setUsernames(username);
@@ -44,7 +52,8 @@ const Search = () => {
   useEffect(() => {
     getLawyersName(query);
   }, [query]);
-
+  const selL=useContext(language)
+  const sl=selL?.lang! as keyof typeof da;
   const filteredPeople =
     query === ""
       ? []
@@ -66,7 +75,7 @@ const Search = () => {
       <FormControl onSubmit={() => router.push(`/search/${query}`)}>
         <InputGroup size={size} w="100%">
           <Input
-            placeholder="Search your Lawyer"
+            placeholder={da[sl]}
             variant="flushed"
             onFocus={() => setBoxShadow(true)}
             onBlur={() => {

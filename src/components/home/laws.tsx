@@ -147,7 +147,7 @@ const sl=selL?.lang! as keyof typeof da;
         fontWeight='bold'
         marginBottom='8'
         textAlign='center'
-        size={useBreakpointValue({ base: 'xs', md: 'sm' })}
+        size={useBreakpointValue({ base: 'xs', md: 'sm' })} mt='6'
       >
       {da[sl]['basic-laws']}
       </Heading>

@@ -96,7 +96,7 @@ const sl=selL?.lang! as keyof typeof da;
             </Checkbox>
           </Flex>
           <FormInput margin='2' name='firstname' id='firstname' placeholder={da[sl]['fn']} />
-          <FormInput margin='2' name='lastname' id='lastname' placeholder='Last name' />
+          <FormInput margin='2' name='lastname' id='lastname' placeholder={da[sl]['ln']} />
           <FormInput margin='2' name='city' id='city' placeholder={da[sl]['ln']} />
           <FormInput margin='2' name='postalcode' id='postalcode' placeholder={da[sl]['city']} />
           <FormInput margin='2' name='pays' id='pays' placeholder={da[sl]['case-postal']} />

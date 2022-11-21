@@ -56,7 +56,7 @@ export default function SearchResult({
   const [value, setValue] = useState("Category");
   const [value1, setValue1] = useState("Experience");
 
-  let filteredLawyers = lawyers.filter(
+  const filteredLawyers = lawyers.filter(
     (lawyer) =>
       lawyer.fullName
         .toLowerCase()

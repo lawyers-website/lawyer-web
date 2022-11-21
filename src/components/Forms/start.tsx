@@ -1,8 +1,15 @@
-import { Heading, Box, useBreakpointValue, Text, SimpleGrid, Flex } from '@chakra-ui/react';
-import { FaHome } from 'react-icons/fa';
-import { BsBuilding } from 'react-icons/bs';
-import React from 'react'
-import {useContext} from 'react'
+import {
+  Heading,
+  Box,
+  useBreakpointValue,
+  Text,
+  SimpleGrid,
+  Flex,
+} from "@chakra-ui/react";
+import { FaHome } from "react-icons/fa";
+import { BsBuilding } from "react-icons/bs";
+import React from "react";
+import { useContext } from "react";
 import { language } from "@/langContext";
 
 interface props {
@@ -10,36 +17,35 @@ interface props {
 }
 
 export default function Start({ setPosition }: props) {
-  const da={
-    "en":{
-      "box_title":"  Is your request private or for business?",
-      "pvt":"  PRIVATE",
-      "business":"BUSINESS"
+  const da = {
+    en: {
+      box_title: "  Is your request private or for business?",
+      pvt: "  PRIVATE",
+      business: "BUSINESS",
     },
-    "it":{
-      "box_title":"La tua richiesta è privata o per lavoro?",
-      "pvt":"PRIVATA",
-      "business":"ATTIVITÀ COMMERCIALE"
+    it: {
+      box_title: "La tua richiesta è privata o per lavoro?",
+      pvt: "PRIVATA",
+      business: "ATTIVITÀ COMMERCIALE",
     },
-    "ger":{
-      "box_title":"Ist Ihre Anfrage privat oder geschäftlich?",
-      "pvt":"PRIVATGELÄNDE",
-      "business":"GESCHÄFT"
+    ger: {
+      box_title: "Ist Ihre Anfrage privat oder geschäftlich?",
+      pvt: "PRIVATGELÄNDE",
+      business: "GESCHÄFT",
     },
-    "fre":{
-      "box_title":"Votre demande est-elle privée ou professionnelle ?",
-      "pvt":"PRIVÉE",
-      "business":"ENTREPRISE"
+    fre: {
+      box_title: "Votre demande est-elle privée ou professionnelle ?",
+      pvt: "PRIVÉE",
+      business: "ENTREPRISE",
     },
-  }
-  const selL=useContext(language)
-  const sl=selL?.lang! as keyof typeof da;
-  
+  };
+  const selL = useContext(language);
+  const sl = selL?.lang as keyof typeof da;
+
   return (
     <>
-      <Text margin='5' fontSize='2xl' textAlign='center'>
-        {da[sl]['box_title']}
-    
+      <Text margin="5" fontSize="2xl" textAlign="center">
+        {da[sl]["box_title"]}
       </Text>
       <SimpleGrid spacing="auto" columns={{ sm: 1, md: 2 }}>
         <Box
@@ -63,7 +69,7 @@ export default function Start({ setPosition }: props) {
               size={useBreakpointValue({ base: "xs", md: "xs" })}
             >
               {/* PRIVATE */}
-              {da[sl]['pvt']}
+              {da[sl]["pvt"]}
             </Heading>
           </Flex>
         </Box>
@@ -89,7 +95,7 @@ export default function Start({ setPosition }: props) {
               textAlign="center"
               size={useBreakpointValue({ base: "xs", md: "xs" })}
             >
-            {da[sl]['business']}
+              {da[sl]["business"]}
             </Heading>
           </Flex>
         </Box>

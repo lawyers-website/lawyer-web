@@ -60,7 +60,7 @@ export default function Lawyer({
   username,
 }: {
   lawyer: LawyerDetails | null;
-  isReviewed: Boolean;
+  isReviewed: boolean;
   reviews: Reviews[];
   username: string;
 }) {

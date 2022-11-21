@@ -8,7 +8,7 @@ const stripe = new Stripe(env.STRIPE_SECRET_KEY, { apiVersion: "2022-11-15" });
 const calculateOrderAmount = async (lawyerId: string) => {
   const lawyer = await prisma.lawyerDetails.findUnique({
     where: {
-      lawyerId,
+      id: lawyerId,
     },
   });
 
@@ -20,11 +20,25 @@ const calculateOrderAmount = async (lawyerId: string) => {
 };
 
 const handler: NextApiHandler = async (req, res) => {
+  const price = await calculateOrderAmount(req.body.lawyerId);
+
+  const order = await prisma.order.create({
+    data: {
+      price,
+      clientId: req.body.clientId,
+      lawyerId: req.body.lawyerId,
+      orderStatus: "PENDING",
+    },
+  });
+
   const paymentIntent = await stripe.paymentIntents.create({
-    amount: await calculateOrderAmount("clannpcd500241v0n9t5fnnow"),
+    amount: price,
     currency: "inr",
     automatic_payment_methods: {
       enabled: true,
+    },
+    metadata: {
+      orderId: order.id,
     },
   });
 

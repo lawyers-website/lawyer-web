@@ -30,6 +30,7 @@
     "firebase": "^9.12.1",
     "formik": "^2.2.9",
     "framer-motion": "^6",
+    "micro": "^9.4.1",
     "next": "12.2.3",
     "next-auth": "^4.10.3",
     "nprogress": "^0.2.0",

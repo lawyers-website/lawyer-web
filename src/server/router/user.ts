@@ -72,7 +72,6 @@ export const userRouter = createProtectedRouter()
             },
           },
         });
-        console.log("success");
       } catch (error) {
         return error;
       }
@@ -87,7 +86,7 @@ export const userRouter = createProtectedRouter()
             lawyerId: input,
           },
         });
-        let ratings: number = 0;
+        let ratings = 0;
         if (reviews) {
           for (let i = 0; i < reviews.length; i++) {
             ratings = ratings + (reviews[i]?.rating as number);

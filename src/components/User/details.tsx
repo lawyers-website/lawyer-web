@@ -102,7 +102,6 @@ export default function Details() {
           <Formik
             initialValues={initialValues}
             onSubmit={(values, { setSubmitting }) => {
-              console.log("called");
               lawyerFormMutation
                 .mutateAsync({
                   course: values.education.course,
@@ -116,15 +115,14 @@ export default function Details() {
                   state: values.location.state,
                   country: values.location.country,
                 })
-                .then((res) => {
-                  // console.log(res.message);
+                .then(() => {
                   setSubmitting(false);
                 });
               router.push("/user/user-in");
             }}
             validationSchema={toFormikValidationSchema(formSchema)}
           >
-            {({ errors }) => {
+            {({}) => {
               return (
                 <Form style={{ width: "100%" }}>
                   <VStack alignItems="flex-start" spacing="6">

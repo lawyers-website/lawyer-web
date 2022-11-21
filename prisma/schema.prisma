@@ -44,14 +44,21 @@ model Reviews {
     createdAt DateTime      @default(now())
 }
 
+enum OrderStatus {
+    PENDING
+    FAILED
+    CONFORMED
+}
+
 model Order {
-    id        String        @id @default(cuid())
-    lawyerId  String
-    lawyer    LawyerDetails @relation(fields: [lawyerId], references: [id])
-    clientId  String
-    client    User          @relation(fields: [clientId], references: [id])
-    createdAt DateTime      @default(now())
-    price     Int
+    id          String        @id @default(cuid())
+    lawyerId    String
+    lawyer      LawyerDetails @relation(fields: [lawyerId], references: [id])
+    clientId    String
+    client      User          @relation(fields: [clientId], references: [id])
+    createdAt   DateTime      @default(now())
+    price       Int
+    orderStatus OrderStatus   @default(PENDING)
 }
 
 model LawyerDetails {

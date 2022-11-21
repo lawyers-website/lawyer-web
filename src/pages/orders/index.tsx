@@ -91,7 +91,6 @@ export default function Tables({ Orders }: { Orders: Order[] }) {
 
   const [sortBy, setSortBy] = useState<keyof Order | null>(null);
   const [reverseSortDirection, setReverseSortDirection] = useState(false);
-  console.log(Orders);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.currentTarget;

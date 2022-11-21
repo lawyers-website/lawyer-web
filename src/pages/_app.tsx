@@ -4,18 +4,12 @@ import type { AppType } from "next/dist/shared/lib/utils";
 import superjson from "superjson";
 import { SessionProvider } from "next-auth/react";
 import NProgress from "nprogress";
-import {
-  Box,
-  ChakraProvider,
-  extendTheme,
-  Spinner,
-  Text,
-} from "@chakra-ui/react";
+import { Box, ChakraProvider, extendTheme, Spinner } from "@chakra-ui/react";
 import { theme } from "../../pro-theme";
 import Router, { useRouter } from "next/router";
 import { useState } from "react";
 import Head from "next/head";
-import Navbar from "@/components/NavBar/navbar";
+import Navbar from "@/components/NavBar";
 import LawyerNav from "@/components/Lawyer/navbar";
 import LangContext from "@/langContext";
 

@@ -45,8 +45,13 @@ model Reviews {
 }
 
 model Order {
-    id       String @id @default(cuid())
-    lawyerId String
+    id        String        @id @default(cuid())
+    lawyerId  String
+    lawyer    LawyerDetails @relation(fields: [lawyerId], references: [id])
+    clientId  String
+    client    User          @relation(fields: [clientId], references: [id])
+    createdAt DateTime      @default(now())
+    price     Int
 }
 
 model LawyerDetails {
@@ -67,6 +72,7 @@ model LawyerDetails {
     rating       Int?      @default(0)
     reviews      Reviews[]
     numofreviews Int?      @default(0)
+    orders       Order[]
 }
 
 model User {
@@ -81,6 +87,7 @@ model User {
     accounts      Account[]
     sessions      Session[]
     lawyerDetails LawyerDetails?
+    orders        Order[]
 }
 
 enum Role {

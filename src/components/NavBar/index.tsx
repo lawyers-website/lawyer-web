@@ -44,7 +44,6 @@ const UserIn = ({ onClickSearchBtn }: Props) => {
             cursor: "pointer",
           }}
         />
-
         <Menu>
           <MenuButton>
             <MdAccountCircle size={33} />
@@ -153,7 +152,6 @@ export default function Navbar() {
   const [isSearchOpen, setSearchOpen] = useState(false);
 
   const onClickSearchBtn = () => setSearchOpen((val) => !val);
-  const { pathname } = useRouter();
   const Lang = useContext(language);
 
   return (

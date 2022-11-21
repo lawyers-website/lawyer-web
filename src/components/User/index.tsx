@@ -1,4 +1,4 @@
-import Navbar from "../NavBar/navbar";
+import Navbar from "../NavBar";
 import { Opening, Header, Jumbotron, Footer } from "../index";
 import { Box } from "@chakra-ui/react";
 import * as React from "react";

@@ -2,7 +2,6 @@ import {
   Box,
   Button,
   Container,
-  FormLabel,
   Heading,
   Input,
   Select,
@@ -61,6 +60,7 @@ export default function Details() {
       state: z.string(),
       country: z.string(),
     }),
+    price: z.number(),
   });
 
   const initialValues: z.infer<typeof formSchema> = {
@@ -77,6 +77,7 @@ export default function Details() {
       state: "",
       country: "",
     },
+    price: 0,
   };
 
   return (
@@ -114,6 +115,7 @@ export default function Details() {
                   expertise: values.expertise,
                   state: values.location.state,
                   country: values.location.country,
+                  price: values.price,
                 })
                 .then(() => {
                   setSubmitting(false);
@@ -181,6 +183,13 @@ export default function Details() {
                         name="location.country"
                         id="country"
                         label="Country"
+                        width={{ base: "20rem", md: "25rem", lg: "33rem" }}
+                      />
+                      <FormInput
+                        type="number"
+                        name="price"
+                        id="price"
+                        label="Price"
                         width={{ base: "20rem", md: "25rem", lg: "33rem" }}
                       />
                     </VStack>

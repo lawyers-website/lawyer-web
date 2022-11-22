@@ -1,6 +1,8 @@
 import SideBar from "@/components/chats/sidebar";
 import { AttachmentIcon } from "@chakra-ui/icons";
 import { Flex, HStack, Text, useBreakpointValue } from "@chakra-ui/react";
+import { GetServerSidePropsContext } from "next";
+import { getSession } from "next-auth/react";
 
 export default function Sidebar() {
   return (
@@ -27,3 +29,19 @@ export default function Sidebar() {
     </>
   );
 }
+
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+  const session = await getSession(ctx);
+  const isUser = !!session?.user;
+
+  if (isUser) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
+  return { props: {} };
+};

@@ -53,11 +53,15 @@ const UserIn = ({ onClickSearchBtn }: Props) => {
               <MenuItem onClick={() => router.push("/user/profile")}>
                 My Account
               </MenuItem>
-              <MenuItem>Payments </MenuItem>
+              <MenuItem onClick={() => router.push("/orders")}>
+                Your orders{" "}
+              </MenuItem>
             </MenuGroup>
             <MenuDivider />
             <MenuGroup title="Help">
-              <MenuItem>Docs</MenuItem>
+              <MenuItem onClick={() => router.push("/inbox")}>
+                Messages
+              </MenuItem>
               <MenuItem>FAQ</MenuItem>
               <Button
                 variant="ghost"
@@ -90,11 +94,13 @@ const UserIn = ({ onClickSearchBtn }: Props) => {
             <MenuItem onClick={() => router.push("/user/profile")}>
               My Account
             </MenuItem>
-            <MenuItem>Payments </MenuItem>
+            <MenuItem onClick={() => router.push("/orders")}>
+              Your orders{" "}
+            </MenuItem>
           </MenuGroup>
           <MenuDivider />
           <MenuGroup title="Help">
-            <MenuItem>Docs</MenuItem>
+            <MenuItem onClick={() => router.push("/inbox")}>Messages</MenuItem>
             <MenuItem>FAQ</MenuItem>
             <Button
               variant="ghost"

@@ -38,6 +38,7 @@ export default function LawyerDetail({
   const boxShadow = useColorModeValue("md", "md-dark");
   const [snapshot] = useCollection(collection(db, "chats"));
   const handleClick = async () => {
+    if (session?.user?.name == username) return null;
     if (session?.user) {
       const chats: any = snapshot?.docs.map((doc) => ({
         id: doc.id,
@@ -103,7 +104,7 @@ export default function LawyerDetail({
                   </Text>
                 </HStack>
                 <ButtonGroup>
-                  <Button variant="outline" onClick={(e) => handleClick()}>
+                  <Button variant="outline" onClick={handleClick}>
                     Message
                   </Button>
                   <Button

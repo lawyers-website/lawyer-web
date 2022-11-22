@@ -14,6 +14,7 @@ export const userRouter = createProtectedRouter()
       state: z.string(),
       country: z.string(),
       image: z.string(),
+      price: z.number(),
     }),
     async resolve({ input, ctx }) {
       try {
@@ -36,6 +37,7 @@ export const userRouter = createProtectedRouter()
                 expertise: input.expertise,
                 state: input.state,
                 country: input.country,
+                price: input.price,
               },
             },
           },

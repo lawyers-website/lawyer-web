@@ -1,19 +1,18 @@
 import { Footer } from "@/components";
-import Navbar from "@/components/Lawyer/navbar";
 import UserProfile from "@/components/User/profile";
+import { GetServerSidePropsContext } from "next";
 import { getSession } from "next-auth/react";
 
 export default function Profile() {
   return (
     <>
-      <Navbar />
       <UserProfile />
       <Footer />
     </>
   );
 }
 
-export const getServerSideProps = async (ctx: any) => {
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const session = await getSession(ctx);
   const isUser = !!session?.user;
 

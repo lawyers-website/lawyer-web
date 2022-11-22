@@ -14,18 +14,27 @@ import {
   MenuItem,
   MenuGroup,
   MenuDivider,
+  Select,
+  IconButton,
+  Modal,
+  ModalOverlay,
+  ModalContent,
 } from "@chakra-ui/react";
 import * as React from "react";
 import { useRouter } from "next/router";
 import { MdAccountCircle } from "react-icons/md";
-import { IoSearch } from "react-icons/io5";
-import { FiSettings } from "react-icons/fi";
-import { RiQuestionLine } from "react-icons/ri";
 import { signOut } from "next-auth/react";
+import { language } from "@/langContext";
+import { SearchIcon } from "@chakra-ui/icons";
+import Search from "../Searchbar";
 
 export default function Navbar() {
   const router = useRouter();
   const isDesktop = useBreakpointValue({ base: false, md: false, lg: true });
+  const [isSearchOpen, setSearchOpen] = React.useState(false);
+
+  const onClickSearchBtn = () => setSearchOpen((val) => !val);
+  const Lang = React.useContext(language);
   return (
     <Box mb="0" as="section" pb={{ base: "0", md: "4" }}>
       <Box
@@ -51,29 +60,39 @@ export default function Navbar() {
                     Messages
                   </Button>
                   <Button onClick={() => router.push("/orders")}>Orders</Button>
-                  <Button>Bookmarks</Button>
-                  <Button>Transcations</Button>
                 </ButtonGroup>
                 <HStack spacing="3">
-                  <IoSearch size={22} />
-                  <FiSettings size={22} />
-                  <RiQuestionLine size={20} />
+                  <IconButton
+                    aria-label="Search btn"
+                    icon={<SearchIcon />}
+                    onClick={() => onClickSearchBtn()}
+                  />
                   <Menu>
                     <MenuButton>
                       <MdAccountCircle size={33} />
                     </MenuButton>
                     <MenuList>
                       <MenuGroup title="Profile">
-                        <MenuItem>My Account</MenuItem>
-                        <MenuItem>Payments </MenuItem>
+                        <MenuItem onClick={() => router.push("/user/profile")}>
+                          My Account
+                        </MenuItem>
+                        <MenuItem onClick={() => router.push("/orders")}>
+                          Your orders{" "}
+                        </MenuItem>
                       </MenuGroup>
                       <MenuDivider />
                       <MenuGroup title="Help">
-                        <MenuItem>Docs</MenuItem>
+                        <MenuItem onClick={() => router.push("/inbox")}>
+                          Messages
+                        </MenuItem>
                         <MenuItem>FAQ</MenuItem>
                         <Button
-                          onClick={() => signOut({ callbackUrl: "/" })}
                           variant="ghost"
+                          onClick={() =>
+                            signOut({
+                              callbackUrl: "/",
+                            })
+                          }
                         >
                           Sign out
                         </Button>
@@ -84,7 +103,11 @@ export default function Navbar() {
               </Flex>
             ) : (
               <HStack spacing="3">
-                <IoSearch size={22} />
+                <IconButton
+                  aria-label="Search btn"
+                  icon={<SearchIcon />}
+                  onClick={() => onClickSearchBtn()}
+                />
 
                 <Menu>
                   <MenuButton>
@@ -92,16 +115,26 @@ export default function Navbar() {
                   </MenuButton>
                   <MenuList>
                     <MenuGroup title="Profile">
-                      <MenuItem>My Account</MenuItem>
-                      <MenuItem>Payments </MenuItem>
+                      <MenuItem onClick={() => router.push("/user/profile")}>
+                        My Account
+                      </MenuItem>
+                      <MenuItem onClick={() => router.push("/orders")}>
+                        Your orders{" "}
+                      </MenuItem>
                     </MenuGroup>
                     <MenuDivider />
                     <MenuGroup title="Help">
-                      <MenuItem>Docs</MenuItem>
+                      <MenuItem onClick={() => router.push("/inbox")}>
+                        Messages
+                      </MenuItem>
                       <MenuItem>FAQ</MenuItem>
                       <Button
-                        onClick={() => signOut({ callbackUrl: "/" })}
                         variant="ghost"
+                        onClick={() =>
+                          signOut({
+                            callbackUrl: "/",
+                          })
+                        }
                       >
                         Sign out
                       </Button>
@@ -110,9 +143,25 @@ export default function Navbar() {
                 </Menu>
               </HStack>
             )}
+            <Select
+              value={Lang?.lang}
+              onChange={(e) => Lang?.setLang(e.target.value)}
+              width="25"
+            >
+              <option value="en">English</option>
+              <option value="it">Italian</option>
+              <option value="fre">French</option>
+              <option value="ger">German</option>
+            </Select>
           </HStack>
         </Container>
       </Box>
+      <Modal isOpen={isSearchOpen} onClose={() => setSearchOpen(false)}>
+        <ModalOverlay />
+        <ModalContent>
+          <Search />
+        </ModalContent>
+      </Modal>
     </Box>
   );
 }

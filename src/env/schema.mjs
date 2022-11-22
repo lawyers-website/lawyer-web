@@ -33,5 +33,5 @@ export const clientSchema = z.object({
  * @type {{ [k in keyof z.infer<typeof clientSchema>]: z.infer<typeof clientSchema>[k] | undefined }}
  */
 export const clientEnv = {
- NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY:  "pk_test_51LLoEcSDCptjjyYlDLJVkkBFhUtsv9hx7DcFKguCpFBcSM4rsBFHxeixsiuZRmXBUx2zaxdEFeqL0xusuIPOA5XG00ZLw5v896"
+ NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY:  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
 };

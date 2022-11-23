@@ -2,7 +2,7 @@ import React from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "@/components/CheckoutForm";
-import { env } from "@/env/server.mjs";
+import { env } from "@/env/client.mjs";
 import {
   Flex,
   StackDivider,

@@ -24,7 +24,7 @@ ChartJS.register(
 
 export default function MyChart2() {
   const display = useColorModeValue(true, false);
-  const width = useBreakpointValue({ base: "100%", md: "80%" });
+  const width = useBreakpointValue({ base: "100%", md: "80%", lg: "80%" });
   const data = {
     labels: [
       "Jan",

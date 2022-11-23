@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   FormControl,
   Input,
   InputGroup,
@@ -81,16 +82,23 @@ const Search = () => {
             onBlur={() => {
               setTimeout(() => {
                 setBoxShadow(false);
-              }, 160);
+              }, 300);
             }}
             autoComplete="off"
+            value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
           <InputLeftElement width="3rem">
             <SearchIcon w={4} h={4} />
           </InputLeftElement>
         </InputGroup>
-        {/* <Button type="submit">search</Button> */}
+        <Button
+          type="submit"
+          hidden
+          onSubmit={() => router.push(`/search/${query}`)}
+        >
+          search
+        </Button>
       </FormControl>
       {query !== "" && showBoxShadow && (
         <Box position="relative">

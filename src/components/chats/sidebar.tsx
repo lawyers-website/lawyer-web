@@ -96,6 +96,8 @@ export default function SideBar() {
     id: doc.id,
     ...doc.data(),
   }));
+ 
+  
 
   return (
     <Flex
@@ -161,6 +163,8 @@ export default function SideBar() {
         direction="column"
         sx={{ scrollbarWidth: "none" }}
       >
+        {(chats
+          ?.filter((chat: any) => chat.users.includes(session?.user?.name)))?.length === 0 && <Text mt={3} alignSelf="center" justifySelf="center" >No chats to show</Text>}
         {chats
           ?.filter((chat: any) => chat.users.includes(session?.user?.name))
           ?.filter((chat: any) =>

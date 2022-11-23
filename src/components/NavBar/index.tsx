@@ -168,7 +168,7 @@ export default function Navbar() {
           bg="bg-surface"
           boxShadow={useColorModeValue("sm", "sm-dark")}
         >
-          <Container py={{ base: "4", lg: "5" }}>
+          <Container maxW="100%" py={{ base: "4", lg: "5" }}>
             <HStack spacing={{ base: 3, md: 10 }} justify="space-between">
               <Heading
                 marginLeft={{ base: 0, md: "3" }}

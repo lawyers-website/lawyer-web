@@ -166,7 +166,7 @@ export default function Jumbotron() {
             objectFit="cover"
           />
           <Text textAlign="center" fontSize="25" fontWeight="semibold">
-            {/* Civil Law */}
+            
             {da[sl]["civil"]["title"]}
           </Text>
           <Text>{da[sl]["civil"]["para"]}</Text>

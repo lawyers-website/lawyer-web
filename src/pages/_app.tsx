@@ -60,16 +60,17 @@ const MyApp: AppType = ({
             </Box>
           ) : (
             <>
-              {(pathname.includes("/inbox") || pathname === "/orders") && (
-                <LawyerNav />
-              )}
+              {(pathname.includes("/inbox") ||
+                pathname === "/orders" ||
+                pathname === "/lawyer/dashboard") && <LawyerNav />}
               {!(
                 pathname === "/signup" ||
                 pathname === "/signin" ||
                 pathname === "/inbox" ||
                 pathname === "/orders" ||
                 pathname.includes("/inbox/") ||
-                pathname === "/admin"
+                pathname.includes("/admin") ||
+                pathname === "/lawyer/dashboard"
               ) && <Navbar />}
               <Component {...pageProps} />
             </>

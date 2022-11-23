@@ -30,11 +30,11 @@ export default function Sidebar() {
   );
 }
 
-export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+export const getServerSideProps = async (ctx: any) => {
   const session = await getSession(ctx);
   const isUser = !!session?.user;
 
-  if (isUser) {
+  if (!isUser) {
     return {
       redirect: {
         destination: "/",

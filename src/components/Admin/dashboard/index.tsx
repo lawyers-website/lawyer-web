@@ -1,16 +1,5 @@
-import {
-  Box,
-  Button,
-  ButtonGroup,
-  Divider,
-  HStack,
-  SimpleGrid,
-  Text,
-  useBreakpointValue,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { Box, SimpleGrid } from "@chakra-ui/react";
 import Boxes from "./box";
-import MyChart2 from "./mychart";
 
 export default function Dashboard() {
   const items = [
@@ -28,46 +17,6 @@ export default function Dashboard() {
           ))}
         </SimpleGrid>
       </Box>
-      <Box
-        width={useBreakpointValue({ base: "100%", md: "95%", lg: "90%" })}
-        boxSizing="border-box"
-        margin={{ sm: "5", lg: "auto" }}
-        py={{ base: "0", sm: "8" }}
-        px={{ base: "2", sm: "5" }}
-        bg={useBreakpointValue({ base: "none", md: "bg-surface" })}
-        boxShadow={{ base: "none", sm: useColorModeValue("md", "dark-lg") }}
-        borderRadius={{ base: "xl", sm: "2xl" }}
-      >
-        <HStack justifyContent="space-between" marginBottom="1.5rem">
-          <Text fontSize="1rem" color="gray.300">
-            OVERVIEW
-          </Text>
-          <ButtonGroup>
-            <Button
-              variant="primary"
-              size={useBreakpointValue({ base: "sm", md: "sm", lg: "md" })}
-            >
-              Month
-            </Button>
-            <Button
-              variant="primary"
-              color="gray.700"
-              bg={useColorModeValue("bg-surface", "#EDF2F7")}
-              boxShadow="md"
-              rounded="md"
-              size={useBreakpointValue({ base: "sm", md: "sm", lg: "md" })}
-              _hover={{
-                bg: "#EDF2F7",
-              }}
-            >
-              Week
-            </Button>
-          </ButtonGroup>
-        </HStack>
-        <Divider marginBottom="1.5rem" />
-        <MyChart2 />
-      </Box>
-      <Divider my="1rem" />
     </>
   );
 }

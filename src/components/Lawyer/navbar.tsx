@@ -42,8 +42,8 @@ export default function Navbar() {
         bg="bg-surface"
         boxShadow={useColorModeValue("sm", "sm-dark")}
       >
-        <Container py={{ base: "4", lg: "5" }}>
-          <HStack spacing="10" justify="space-between">
+        <Container maxW="100%" py={{ base: "4", lg: "5" }}>
+          <HStack spacing={5} justify="space-between">
             <Heading
               marginLeft="0"
               size={useBreakpointValue({ base: "xs", md: "sm" })}
@@ -51,7 +51,7 @@ export default function Navbar() {
               Lawyers
             </Heading>
             {isDesktop ? (
-              <Flex justify="space-between" flex="1">
+              <Flex ml={15} justify="space-between" flex="1">
                 <ButtonGroup variant="link" spacing="8">
                   <Button onClick={() => router.push("/user/user-in")}>
                     Home
@@ -59,6 +59,11 @@ export default function Navbar() {
                   <Button onClick={() => router.push("/inbox")}>
                     Messages
                   </Button>
+                  {true && (
+                    <Button onClick={() => router.push("/lawyer/dashboard")}>
+                      Dashboard
+                    </Button>
+                  )}
                   <Button onClick={() => router.push("/orders")}>Orders</Button>
                 </ButtonGroup>
                 <HStack spacing="3">

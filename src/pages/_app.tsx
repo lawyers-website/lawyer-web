@@ -12,11 +12,15 @@ import Head from "next/head";
 import Navbar from "@/components/NavBar";
 import LawyerNav from "@/components/Lawyer/navbar";
 import LangContext from "@/langContext";
+import { AppProps } from "next/app";
+import { Session } from "next-auth";
 
-const MyApp: AppType = ({
+const MyApp = ({
   Component,
   pageProps: { session, ...pageProps },
-}) => {
+}: AppProps<{
+  session: Session;
+}>) => {
   const [loading, setLoading] = useState(false);
   Router.events.on("routeChangeStart", () => {
     setLoading(true);

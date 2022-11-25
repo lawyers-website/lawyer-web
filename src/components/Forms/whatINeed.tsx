@@ -10,10 +10,10 @@ import { MdNoteAlt } from "react-icons/md";
 import { GiChalkOutlineMurder } from "react-icons/gi";
 import { IoPeopleSharp, IoHomeSharp } from "react-icons/io5";
 import { TbReceiptTax } from "react-icons/tb";
-import { GrUserWorker } from "react-icons/gr";
 import { RiGovernmentFill } from "react-icons/ri";
 import { useContext } from "react";
 import { language } from "@/langContext";
+import EngineeringIcon from "@mui/icons-material/Engineering";
 
 interface props {
   setPosition: React.Dispatch<React.SetStateAction<number>>;
@@ -54,7 +54,7 @@ function Extrabox({ item, setPosition }: Props) {
             "FAMILY/DIVORCE": <IoPeopleSharp size={40} />,
             INSURANCE: <MdNoteAlt size={40} />,
             "FINANCE/TAXES": <TbReceiptTax size={40} />,
-            "LABOR LAW": <GrUserWorker size={40} />,
+            "LABOR LAW": <EngineeringIcon sx={{ fontSize: 40 }} />,
             "RENT/REALESTATE": <IoHomeSharp size={40} />,
             "GOVERNMENT ADMINISTRATION": <RiGovernmentFill size={40} />,
             OTHERS: <BsThreeDots size={40} />,
@@ -89,7 +89,7 @@ export default function SecondStep({ setPosition }: props) {
         {da[sl]}
       </Text>
       <SimpleGrid spacing="auto" columns={{ sm: 1, md: 4 }}>
-        {items.map((item, index) => (
+        {items.map((item) => (
           <Extrabox item={item} key={item.title} setPosition={setPosition} />
         ))}
       </SimpleGrid>

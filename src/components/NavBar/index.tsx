@@ -56,15 +56,10 @@ const UserIn = ({ onClickSearchBtn }: Props) => {
               <MenuItem onClick={() => router.push("/orders")}>
                 Your orders{" "}
               </MenuItem>
-            </MenuGroup>
-            <MenuDivider />
-            <MenuGroup title="Help">
               <MenuItem onClick={() => router.push("/inbox")}>
                 Messages
               </MenuItem>
-              <MenuItem>FAQ</MenuItem>
-              <Button
-                variant="ghost"
+              <MenuItem
                 onClick={() =>
                   signOut({
                     callbackUrl: "/",
@@ -72,7 +67,7 @@ const UserIn = ({ onClickSearchBtn }: Props) => {
                 }
               >
                 Sign out
-              </Button>
+              </MenuItem>
             </MenuGroup>
           </MenuList>
         </Menu>
@@ -99,20 +94,17 @@ const UserIn = ({ onClickSearchBtn }: Props) => {
             </MenuItem>
           </MenuGroup>
           <MenuDivider />
-          <MenuGroup title="Help">
-            <MenuItem onClick={() => router.push("/inbox")}>Messages</MenuItem>
-            <MenuItem>FAQ</MenuItem>
-            <Button
-              variant="ghost"
-              onClick={() =>
-                signOut({
-                  callbackUrl: "/",
-                })
-              }
-            >
-              Sign out
-            </Button>
-          </MenuGroup>
+          <MenuItem onClick={() => router.push("/inbox")}>Messages</MenuItem>
+          <Button
+            variant="ghost"
+            onClick={() =>
+              signOut({
+                callbackUrl: "/",
+              })
+            }
+          >
+            Sign out
+          </Button>
         </MenuList>
       </Menu>
     </Flex>
